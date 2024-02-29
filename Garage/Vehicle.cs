@@ -2,8 +2,12 @@
 {
     public class Vehicle
     {
+        public static readonly Vehicle Empty = new Vehicle();
+
         public Vehicle()
-        { }
+        {
+            Id = Guid.Empty;
+        }
 
         public Vehicle(string  vin, string? make, string? model, int year, string? color, string? licensePlate)
         {

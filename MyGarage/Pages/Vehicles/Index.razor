@@ -1,7 +1,9 @@
 ﻿@page "/vehicles"
 @using Garage
 @using System.Collections.Immutable
+@using MyGarage.Components
 @using MyGarage.Services
+
 
 @inject ITheGarageClient TheGarageClient
 
@@ -15,6 +17,11 @@
 }
 else
 {
+    <ConfirmationDialog 
+        @ref="ConfirmationDialog"
+        Title="Delete Vehicle?"
+        ConfirmationChoiceMade="ConfirmDelete_Click"></ConfirmationDialog>
+
     <table class="table">
         <thead>
             <tr>
@@ -63,6 +70,8 @@ else
 
 @code {
     private IEnumerable<Vehicle>? _vehicles;
+    
+    protected ConfirmationDialog ConfirmationDialog { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,11 +79,21 @@ else
         _vehicles = _vehicles.OrderBy(v => v.Year).ToImmutableArray();
     }
 
-    private async void Delete(Vehicle vehicle)
+    private void Delete(Vehicle vehicle)
     {
-        await TheGarageClient.DeleteVehicleAsync(vehicle.Id);
-        _vehicles = await TheGarageClient.GetVehiclesAsync();
+        string message = $"Are you sure you want to delete \"{vehicle.Year} {vehicle.Make} - {vehicle.Vin}\"?";
+        ConfirmationDialog.Show(message, vehicle);
 
         StateHasChanged();
+    }
+
+    private async void ConfirmDelete_Click(ConfirmationDialog.ConfirmationState confirmedState)
+    {
+        if (confirmedState.Confirmed)
+        {
+            await TheGarageClient.DeleteVehicleAsync(confirmedState.Vehicle.Id);
+            _vehicles = await TheGarageClient.GetVehiclesAsync();
+            StateHasChanged();
+        }
     }
 }
