@@ -1,0 +1,80 @@
+﻿@page "/vehicles"
+@using Garage
+@using System.Collections.Immutable
+@using MyGarage.Services
+
+@inject ITheGarageClient TheGarageClient
+
+<PageTitle>Vehicles</PageTitle>
+
+<h1>My Vehicles</h1>
+
+@if (_vehicles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>VIN</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Year</th>
+                <th>Color</th>
+                <th>License</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var vehicle in _vehicles)
+            {
+                var count = vehicle.MaintenanceHistory?.Length ?? 0;
+                <tr>
+                    <td>@vehicle.Vin</td>
+                    <td>@vehicle.Make</td>
+                    <td>@vehicle.Model</td>
+                    <td>@vehicle.Year</td>
+                    <td>@vehicle.Color</td>
+                    <td>@vehicle.LicensePlate</td>
+                    <td>@count </td>
+                    <td>
+                        <NavLink class="nav-link" href="@($"/vehicles/form/{vehicle.Id}")" Match="NavLinkMatch.All">
+                            <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true">Edit</span>
+                        </NavLink>
+                    </td>
+                    <td>
+                        <button @onclick="() => Delete(vehicle)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<div class="nav-item px-3">
+    <NavLink class="nav-link" href="vehicles/form" Match="NavLinkMatch.All">
+        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add Vehicle
+    </NavLink>
+</div>
+
+@code {
+    private IEnumerable<Vehicle>? _vehicles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _vehicles = await TheGarageClient.GetVehiclesAsync();
+        _vehicles = _vehicles.OrderBy(v => v.Year).ToImmutableArray();
+    }
+
+    private async void Delete(Vehicle vehicle)
+    {
+        await TheGarageClient.DeleteVehicleAsync(vehicle.Id);
+        _vehicles = await TheGarageClient.GetVehiclesAsync();
+
+        StateHasChanged();
+    }
+}

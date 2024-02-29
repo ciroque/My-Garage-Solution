@@ -1,0 +1,163 @@
+﻿@page "/vehicles/form/{Id:guid?}"
+@using Garage
+@using MyGarage.Services
+
+@inject NavigationManager NavigationManager
+@inject ITheGarageClient TheGarageClient
+
+<PageTitle>@ActionLabel Vehicle</PageTitle>
+
+<h1>@ActionLabel Vehicle</h1>
+
+@if (Vehicle == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container-fluid">
+        <form>
+            <div class="form-group">
+                <label for="vin">VIN</label>
+                <input type="text" class="form-control" id="vin" placeholder="Vehicle Identification Number" @bind-value="Vehicle.Vin"/>
+            </div>
+            <div class="form-group">
+                <label for="make">Make</label>
+                <input type="text" class="form-control" id="make" placeholder="Make" @bind-value="Vehicle.Make"/>
+            </div>
+            <div class="form-group">
+                <label for="model">Model</label>
+                <input type="text" class="form-control" id="model" placeholder="Model" @bind-value="Vehicle.Model"/>
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="text" class="form-control" id="year" placeholder="Year" @bind-value="Vehicle.Year"/>
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" placeholder="Color" @bind-value="Vehicle.Color"/>
+            </div>
+            <div class="form-group">
+                <label for="licensePlate">License Plate</label>
+                <input type="text" class="form-control" id="licensePlate" placeholder="License Plate" @bind-value="Vehicle.LicensePlate" />
+            </div>
+            
+            <div class="form-group">
+                @if (Vehicle.MaintenanceHistory == null || Vehicle.MaintenanceHistory.Length == 0)
+                {
+                    <p>Vehicle has no Maintenance History</p>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date / Time</th>
+                            <th>Maintenance Item</th>
+                            <th>Mileage</th>
+                            <th>Notes</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var maintenance in Vehicle.MaintenanceHistory)
+                        {
+                            <tr>
+                                <td>@maintenance.Date</td>
+                                <td>@maintenance.MaintenanceItem</td>
+                                <td>@maintenance.Mileage</td>
+                                <td>@maintenance.Notes</td>
+                                <td>
+                                    <NavLink class="nav-link" href="@($"/vehicles/{Vehicle.Id}/maintenance/form/{maintenance.Id}")">
+                                        Edit
+                                    </NavLink>
+                                </td>
+                                <td><button type="button" @onclick="() => Delete(Vehicle, maintenance.Id)">Delete</button></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href=@($"/vehicles/{Vehicle.Id}/maintenance/form/") Match="NavLinkMatch.All">
+                        <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add Maintenance
+                    </NavLink>
+                </div>
+            </div>
+
+            <div>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-primary" @onclick="Submit">Save</button>
+                        </td>
+                        <td>
+                            <NavLink class="nav-link" href="vehicles">
+                                <span class="bi bi-vehicles-nav-menu" aria-hidden="true"></span> Cancel
+                            </NavLink>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private Vehicle? Vehicle { get; set; }
+
+    private string? ActionLabel { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(Id != null)
+        {
+            ActionLabel = "Edit";
+            Vehicle = await TheGarageClient.GetVehicleAsync(Id.Value);
+        }
+        else
+        {
+            ActionLabel = "Add";
+            Vehicle = new Vehicle();
+        }
+    }
+
+    private async Task Submit()
+    {
+        try
+        {
+            if (Id != null)
+            {
+                await TheGarageClient.UpdateVehicleAsync(Vehicle);
+            }
+            else
+            {
+                await TheGarageClient.CreateVehicleAsync(Vehicle);
+            }
+
+            NavigationManager.NavigateTo("/vehicles");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private async Task Delete(Vehicle vehicle, Guid maintenanceId)
+    {
+        vehicle.RemoveMaintenance(maintenanceId);
+        await TheGarageClient.UpdateVehicleAsync(vehicle);
+
+        StateHasChanged();
+    }
+}
+    

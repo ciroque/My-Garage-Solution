@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarage", "MyGarage.csproj", "{3E9E4C85-AAFB-450C-88D6-8588CD2B79BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGarage", "..\TheGarage\TheGarage.csproj", "{5323AE21-88B1-4571-91E2-5E82DC5F2F0D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Garage", "..\Garage\Garage.csproj", "{355FEB1E-E805-41FE-B7C3-EC88C76139C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E9E4C85-AAFB-450C-88D6-8588CD2B79BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E9E4C85-AAFB-450C-88D6-8588CD2B79BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E9E4C85-AAFB-450C-88D6-8588CD2B79BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E9E4C85-AAFB-450C-88D6-8588CD2B79BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5323AE21-88B1-4571-91E2-5E82DC5F2F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5323AE21-88B1-4571-91E2-5E82DC5F2F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5323AE21-88B1-4571-91E2-5E82DC5F2F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5323AE21-88B1-4571-91E2-5E82DC5F2F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355FEB1E-E805-41FE-B7C3-EC88C76139C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355FEB1E-E805-41FE-B7C3-EC88C76139C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355FEB1E-E805-41FE-B7C3-EC88C76139C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355FEB1E-E805-41FE-B7C3-EC88C76139C5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C9ADBDE-4529-442F-9F5D-C63F9330CF06}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,107 @@
+﻿@page "/vehicles/{Id:guid}/maintenance/form/{MId:guid?}"
+@using Garage
+@using MyGarage.Services
+
+@inject NavigationManager NavigationManager
+@inject ITheGarageClient TheGarageClient
+
+<PageTitle>@ActionLabel Vehicle</PageTitle>
+
+<h1>@ActionLabel Maintenance</h1>
+
+@if(Maintenance == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container-fluid">
+        <form>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date" @bind-value="Maintenance.Date"/>
+            </div>
+            <div class="form-group">
+                <label for="maintenanceItem">Maintenance Item</label>
+                <input type="text" class="form-control" id="maintenanceItem" @bind-value="Maintenance.MaintenanceItem"/>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Mileage</label>
+                <input type="text" class="form-control" id="mileage" @bind-value="Maintenance.Mileage"/>
+            </div>
+            <div class="form-group">
+                <label for="notes">Notes</label>
+                <input type="text" class="form-control" id="notes" @bind-value="Maintenance.Notes"/>
+            </div>
+            
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                            <button type="button" class="btn btn-primary" @onclick="Save">Save</button>
+                    </td>
+                    <td>
+                        <NavLink class="nav-link" href="@($"/vehicles/form/{Id}")">
+                            <span class="bi bi-vehicles-nav-menu" aria-hidden="true"></span> Cancel
+                        </NavLink>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    [Parameter]
+    public Guid? MId { get; set; }
+
+    [SupplyParameterFromForm]
+    private Maintenance? Maintenance { get; set; }
+
+    private string? ActionLabel { get; set; }
+
+    private Vehicle? _vehicle;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _vehicle = await TheGarageClient.GetVehicleAsync(Id);
+        if (MId == null)
+        {
+            Maintenance = new Maintenance();
+            ActionLabel = "Add";
+        }
+        else
+        {
+            Maintenance = _vehicle.GetMaintenance(MId.Value);
+            ActionLabel = "Edit";
+        }
+    }
+
+    private async Task Save()
+    {
+        if (MId == null)
+        {
+            _vehicle.AddMaintenance(Maintenance);
+        }
+        else
+        {
+            _vehicle.UpdateMaintenance(Maintenance);
+        }
+
+        try
+        {
+            await TheGarageClient.UpdateVehicleAsync(_vehicle);
+
+            NavigationManager.NavigateTo($"/vehicles/form/{Id}");
+
+        } catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
