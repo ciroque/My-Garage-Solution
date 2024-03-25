@@ -12,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddSingleton<IVehicleStorage>(sp => RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379"));
+builder.Services.AddSingleton<IPhotoStorage>(sp => AzurePhotoStorageService.Create("azure:thing", "my-garage"));
+
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>

@@ -10,7 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 // Ensure the HttpClient is available for injection
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-// Register the TheGarageClient as a service so it can be injected into components
+// Register the TheGarageClient as a service, so it can be injected into components
 builder.Services.AddScoped<ITheGarageClient>(sp =>
 {
     var httpClient = sp.GetRequiredService<HttpClient>();

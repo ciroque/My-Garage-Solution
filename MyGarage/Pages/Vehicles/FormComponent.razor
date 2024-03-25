@@ -8,6 +8,20 @@
 
 <PageTitle>@ActionLabel Vehicle</PageTitle>
 
+    <style>
+        fieldset {
+            margin: 8px;
+            border: 1px solid silver;
+            padding: 8px;
+            border-radius: 4px;
+        }
+
+        legend {
+            padding: 2px;
+            font-weight: 300;
+        }
+    </style>
+
 <h1>@ActionLabel Vehicle</h1>
 
 @if (Vehicle == null)
@@ -23,42 +37,51 @@ else
             ConfirmationChoiceMade="ConfirmDelete_Click"></ConfirmationDialog>
 
         <form>
-            <div class="form-group">
-                <label for="vin">VIN</label>
-                <input type="text" class="form-control" id="vin" placeholder="Vehicle Identification Number" @bind-value="Vehicle.Vin"/>
-            </div>
-            <div class="form-group">
-                <label for="make">Make</label>
-                <input type="text" class="form-control" id="make" placeholder="Make" @bind-value="Vehicle.Make"/>
-            </div>
-            <div class="form-group">
-                <label for="model">Model</label>
-                <input type="text" class="form-control" id="model" placeholder="Model" @bind-value="Vehicle.Model"/>
-            </div>
-            <div class="form-group">
-                <label for="year">Year</label>
-                <input type="text" class="form-control" id="year" placeholder="Year" @bind-value="Vehicle.Year"/>
-            </div>
-            <div class="form-group">
-                <label for="color">Color</label>
-                <input type="text" class="form-control" id="color" placeholder="Color" @bind-value="Vehicle.Color"/>
-            </div>
-            <div class="form-group">
-                <label for="licensePlate">License Plate</label>
-                <input type="text" class="form-control" id="licensePlate" placeholder="License Plate" @bind-value="Vehicle.LicensePlate" />
-            </div>
             
-            @if (Id != null)
-            {
+            <fieldset>
+                <legend>Vehicle Information</legend>
+
                 <div class="form-group">
-                    @if (Vehicle.MaintenanceHistory == null || Vehicle.MaintenanceHistory.Length == 0)
-                    {
-                        <p>Vehicle has no Maintenance History</p>
-                    }
-                    else
-                    {
-                        <table class="table">
-                            <thead>
+                    <label for="vin">VIN</label>
+                    <input type="text" class="form-control" id="vin" placeholder="Vehicle Identification Number" @bind-value="Vehicle.Vin"/>
+                </div>
+                <div class="form-group">
+                    <label for="make">Make</label>
+                    <input type="text" class="form-control" id="make" placeholder="Make" @bind-value="Vehicle.Make"/>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input type="text" class="form-control" id="model" placeholder="Model" @bind-value="Vehicle.Model"/>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input type="text" class="form-control" id="year" placeholder="Year" @bind-value="Vehicle.Year"/>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <input type="text" class="form-control" id="color" placeholder="Color" @bind-value="Vehicle.Color"/>
+                </div>
+                <div class="form-group">
+                    <label for="licensePlate">License Plate</label>
+                    <input type="text" class="form-control" id="licensePlate" placeholder="License Plate" @bind-value="Vehicle.LicensePlate"/>
+                </div>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Maintenance Schedule</legend>
+
+                @if (Id != null)
+                {
+                    <div class="form-group">
+                        @if (Vehicle.MaintenanceHistory == null || Vehicle.MaintenanceHistory.Length == 0)
+                        {
+                            <p>Vehicle has no Maintenance History</p>
+                        }
+                        else
+                        {
+                            <table class="table">
+                                <thead>
                                 <tr>
                                     <th>Date / Time</th>
                                     <th>Maintenance Item</th>
@@ -67,8 +90,8 @@ else
                                     <th></th>
                                     <th></th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 @foreach (var maintenance in Vehicle.MaintenanceHistory)
                                 {
                                     <tr>
@@ -84,24 +107,65 @@ else
                                         <td><button type="button" @onclick="() => Delete(Vehicle, maintenance.Id)">Delete</button></td>
                                     </tr>
                                 }
-                            </tbody>
-                        </table>
-                    }
+                                </tbody>
+                            </table>
+                        }
 
-                    <div class="nav-item px-3">
-                        <NavLink class="nav-link" href=@($"/vehicles/{Vehicle.Id}/maintenance/form/") Match="NavLinkMatch.All">
-                            <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add Maintenance
-                        </NavLink>
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href=@($"/vehicles/{Vehicle.Id}/maintenance/form/") Match="NavLinkMatch.All">
+                                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add Maintenance
+                            </NavLink>
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </fieldset>
+
+            <fieldset>
+                <legend>Photos</legend>
+
+                @if (Id != null)
+                {
+                    <div class="form-group">
+                        @if (Vehicle.Photos == null || Vehicle.Photos.Length == 0)
+                        {
+                            <p>Vehicle has no Photos</p>
+                        }
+                        else
+                        {
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Photo</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach (var photo in Vehicle.Photos)
+                                {
+                                    <tr>
+                                        <td><img src="@photo.Uri" alt="@photo.Description" width="100" height="100"/></td>
+                                        <td><button type="button" @onclick="() => Delete(Vehicle, photo.Id)">Delete</button></td>
+                                    </tr>
+                                }
+                                </tbody>
+                            </table>
+                        }
+
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href=@($"/vehicles/{Vehicle.Id}/photos/form/") Match="NavLinkMatch.All">
+                                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Add Photo
+                            </NavLink>
+                        </div>
+                    </div>
+                }
+            </fieldset>
 
             <div>
                 <table>
                     <tbody>
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary" @onclick="Submit">Save</button>
+                            <button type="button" class="btn btn-primary" @onclick="Save">Save</button>
                         </td>
                         <td>
                             <NavLink class="nav-link" href="vehicles">
@@ -142,7 +206,7 @@ else
         }
     }
 
-    private async Task Submit()
+    private async Task Save()
     {
         try
         {
@@ -169,8 +233,6 @@ else
         ConfirmationDialog.Show(message, vehicle, maintenanceId);
 
         StateHasChanged();
-
-        
     }
 
     private async void ConfirmDelete_Click(ConfirmationDialog.ConfirmationState confirmedState)
@@ -184,4 +246,3 @@ else
         }
     }
 }
-    
