@@ -10,8 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var redisUrl = "redis.nginxazure.build";
 
-builder.Services.AddSingleton<IVehicleStorage>(sp => RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379"));
+builder.Services.AddScoped<IVehicleStorage>(sp => RedisVehicleStorageService.Create(redisUrl));
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
