@@ -41,7 +41,7 @@ else
             @foreach (var vehicle in _vehicles)
             {
                 var maintenanceHistoryLength = vehicle.MaintenanceHistory?.Length ?? 0;
-                var photoCount = vehicle.Photos?.Length ?? 0;
+                var photoCount = vehicle.Photos?.Count() ?? 0;
                 <tr>
                     <td>@vehicle.Vin</td>
                     <td>@vehicle.Make</td>

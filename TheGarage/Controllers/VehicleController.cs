@@ -1,5 +1,4 @@
 ﻿using Garage;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TheGarage.Services;
 

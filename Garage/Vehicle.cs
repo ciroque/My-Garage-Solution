@@ -27,7 +27,7 @@
         public string? Color { get; set; }
         public string? LicensePlate { get; set; }
         public Maintenance[]? MaintenanceHistory { get; set; }
-        public Photo[]? Photos { get; set; }
+        public IEnumerable<Photo>? Photos { get; set; }
 
         public void AddMaintenance(Maintenance maintenance)
         {

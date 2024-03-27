@@ -1,0 +1,49 @@
+﻿@page "/gallery"
+@using MyGarage.Services
+@using Garage
+
+@inject ITheGarageClient TheGarageClient
+
+<PageTitle>Vehicle Gallery</PageTitle>
+
+<h1>Vehicle Gallery</h1>
+
+@if (_photos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row">
+            @foreach (var photo in _photos)
+            {
+                <div class="col-md-3">
+                    <img src="@photo.Uri" alt="@photo.Description" class="img-thumbnail" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private IEnumerable<Vehicle>? _vehicles;
+
+    private IEnumerable<Photo> _photos = new List<Photo>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        IEnumerable<Photo> Selector(Vehicle vehicle)
+        {
+            return vehicle.Photos ?? new List<Photo>();
+        }
+
+        _vehicles = await TheGarageClient.GetVehiclesAsync();
+
+        if(_vehicles != null)
+        {
+            _photos = _vehicles.SelectMany((Func<Vehicle, IEnumerable<Photo>>?)Selector);
+        }
+        
+    }
+}

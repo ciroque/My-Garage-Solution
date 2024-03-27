@@ -126,7 +126,7 @@ else
                 @if (Id != null)
                 {
                     <div class="form-group">
-                        @if (Vehicle.Photos == null || Vehicle.Photos.Length == 0)
+                        @if (Vehicle.Photos == null || !Vehicle.Photos.Any())
                         {
                             <p>Vehicle has no Photos</p>
                         }

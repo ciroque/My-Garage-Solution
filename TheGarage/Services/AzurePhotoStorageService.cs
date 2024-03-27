@@ -1,8 +1,10 @@
-﻿namespace TheGarage.Services
+﻿using Azure.Storage.Blobs;
+
+namespace TheGarage.Services
 {
     public class AzurePhotoStorageService : IPhotoStorage
     {
-        private readonly string _connectionString;
+        private readonly string _connectionString = "DefaultEndpointsProtocol=https;AccountName=n4aworkshop;AccountKey=D88esoXGB/vjXjELbhdjgCHjFt62i/Wtjqhde7pee4V66S0T89Wo1PQLXTLu+wTCiZ7XHYfflZqF+AStmW1iyg==;EndpointSuffix=core.windows.net";
         private readonly string _containerName;
 
         public static IPhotoStorage Create(string connectionString, string containerName)

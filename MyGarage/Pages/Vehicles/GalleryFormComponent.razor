@@ -33,7 +33,8 @@ else
 
             <div class="form-group">
                 <label for="photo">Photo</label>
-                <input type="file" class="form-control" id="photo" @bind-value="Photo.Uri" />
+                
+                <InputFile id="photo" OnChange="LoadFiles" />
             </div>
 
             <table>
@@ -55,14 +56,11 @@ else
 }
 
 @code {
-    [Parameter]
-    public Guid VehicleId { get; set; }
+    [Parameter] public Guid VehicleId { get; set; }
 
-    [Parameter]
-    public Guid? PhotoId { get; set; }
+    [Parameter] public Guid? PhotoId { get; set; }
 
-    [SupplyParameterFromForm]
-    private Photo? Photo { get; set; }
+    [SupplyParameterFromForm] private Photo? Photo { get; set; }
 
     private string? ActionLabel { get; set; }
 
@@ -82,6 +80,16 @@ else
             Photo = new Photo();
         }
 
+    }
+
+    private async void LoadFiles(InputFileChangeEventArgs e)
+    {
+        var file = e.GetMultipleFiles().FirstOrDefault();
+        if (file != null)
+        {
+            await using var stream = file.OpenReadStream(maxAllowedSize: 2 * 1024 * 1024); // Set maxAllowedSize if needed
+            await TheGarageClient.StoreImageAsync(stream);
+        }
     }
 
     private async Task Save()

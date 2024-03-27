@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using Garage;
 
 namespace MyGarage.Services
@@ -10,6 +11,7 @@ namespace MyGarage.Services
         Task CreateVehicleAsync(Vehicle vehicle);
         Task UpdateVehicleAsync(Vehicle vehicle);
         Task DeleteVehicleAsync(Guid id);
+        Task StoreImageAsync(Stream stream);
     }
 
     public class TheGarageClient(HttpClient httpClient) : ITheGarageClient
@@ -43,6 +45,22 @@ namespace MyGarage.Services
         {
             var response = await httpClient.DeleteAsync($"{BaseUrl}/{id}");
             response.EnsureSuccessStatusCode();
+        }
+
+        public async Task StoreImageAsync(Stream stream)
+        {
+            Console.WriteLine(">>>>>>>>>>>>  >>>>>>>>> TheGarageClient::StoreImageAsync");
+            // await httpClient.PostAsync($"{BaseUrl}/photo/upload", new StreamContent(stream)
+            // {
+            //     Headers =
+            //     {
+            //         ContentDisposition = new ContentDispositionHeaderValue("form-data")
+            //         {
+            //             FileName = Guid.NewGuid().ToString(),
+            //             Name = "file"
+            //         }
+            //     }
+            // });
         }
     }
 }
