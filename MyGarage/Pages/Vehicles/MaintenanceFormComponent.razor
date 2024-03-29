@@ -41,7 +41,7 @@ else
                             <button type="button" class="btn btn-primary" @onclick="Save">Save</button>
                     </td>
                     <td>
-                        <NavLink class="nav-link" href="@($"/vehicles/form/{Id}")">
+                        <NavLink class="nav-link" href="@($"/vehicles/form/{VehicleId}")">
                             <span class="bi bi-vehicles-nav-menu" aria-hidden="true"></span> Cancel
                         </NavLink>
 
@@ -55,10 +55,10 @@ else
 
 @code {
     [Parameter]
-    public Guid Id { get; set; }
+    public Guid VehicleId { get; set; }
 
     [Parameter]
-    public Guid? MId { get; set; }
+    public Guid? MaintenanceId { get; set; }
 
     [SupplyParameterFromForm]
     private Maintenance? Maintenance { get; set; }
@@ -69,22 +69,23 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _vehicle = await TheGarageClient.GetVehicleAsync(Id);
-        if (MId == null)
+        var theGarage = await TheGarageClient.GetVehicleAsync(VehicleId);
+        _vehicle = theGarage.Vehicles.FirstOrDefault();
+        if (MaintenanceId == null)
         {
             Maintenance = new Maintenance();
             ActionLabel = "Add";
         }
         else
         {
-            Maintenance = _vehicle.GetMaintenance(MId.Value);
+            Maintenance = _vehicle.GetMaintenance(MaintenanceId.Value);
             ActionLabel = "Edit";
         }
     }
 
     private async Task Save()
     {
-        if (MId == null)
+        if (MaintenanceId == null)
         {
             _vehicle.AddMaintenance(Maintenance);
         }
@@ -97,7 +98,7 @@ else
         {
             await TheGarageClient.UpdateVehicleAsync(_vehicle);
 
-            NavigationManager.NavigateTo($"/vehicles/form/{Id}");
+            NavigationManager.NavigateTo($"/vehicles/form/{VehicleId}");
 
         } catch(Exception ex)
         {

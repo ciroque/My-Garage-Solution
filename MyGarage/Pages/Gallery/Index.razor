@@ -19,7 +19,7 @@ else
             @foreach (var photo in _photos)
             {
                 <div class="col-md-3">
-                    <img src="@photo.Uri" alt="@photo.Description" class="img-thumbnail" />
+                    <img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" class="img-thumbnail" />
                 </div>
             }
         </div>
@@ -27,22 +27,22 @@ else
 }
 
 @code {
-    private IEnumerable<Vehicle>? _vehicles;
+    private TheGarage? TheGarage { get; set; }
 
     private IEnumerable<Photo> _photos = new List<Photo>();
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync() 
     {
         IEnumerable<Photo> Selector(Vehicle vehicle)
         {
             return vehicle.Photos ?? new List<Photo>();
         }
 
-        _vehicles = await TheGarageClient.GetVehiclesAsync();
+        TheGarage = await TheGarageClient.GetVehiclesAsync();
 
-        if(_vehicles != null)
+        if(TheGarage.Vehicles != null)
         {
-            _photos = _vehicles.SelectMany((Func<Vehicle, IEnumerable<Photo>>?)Selector);
+            _photos = TheGarage.Vehicles.SelectMany((Func<Vehicle, IEnumerable<Photo>>?)Selector);
         }
         
     }

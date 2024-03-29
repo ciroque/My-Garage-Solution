@@ -1,17 +1,13 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
+using System.Text.Json;
 using Garage;
 
 namespace MyGarage.Services
 {
-    public interface ITheGarageClient
+    public class TheGarage(IEnumerable<Vehicle> vehicles, string sasToken)
     {
-        Task<IEnumerable<Vehicle>?> GetVehiclesAsync();
-        Task<Vehicle?> GetVehicleAsync(Guid id);
-        Task CreateVehicleAsync(Vehicle vehicle);
-        Task UpdateVehicleAsync(Vehicle vehicle);
-        Task DeleteVehicleAsync(Guid id);
-        Task StoreImageAsync(Stream stream);
+        public readonly string SasToken = sasToken;
+        public readonly IEnumerable<Vehicle> Vehicles = vehicles;
     }
 
     public class TheGarageClient(HttpClient httpClient) : ITheGarageClient
@@ -19,14 +15,20 @@ namespace MyGarage.Services
         // TODO: Figure out how to get this value from configuration / for deployment in Azure.
         private const string BaseUrl = $"https://localhost:7213/vehicles";
 
-        public async Task<IEnumerable<Vehicle>?> GetVehiclesAsync()
+        public async Task<TheGarage?> GetVehiclesAsync()
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<Vehicle>>(BaseUrl);
+            var response = await httpClient.GetAsync(BaseUrl);
+            var sasToken = response.Headers.GetValues("x-sas-token").FirstOrDefault();
+            var vehicles = await response.Content.ReadFromJsonAsync<IEnumerable<Vehicle>>();
+            return new TheGarage(vehicles, sasToken);
         }
 
-        public async Task<Vehicle?> GetVehicleAsync(Guid id)
+        public async Task<TheGarage?> GetVehicleAsync(Guid id)
         {
-            return await httpClient.GetFromJsonAsync<Vehicle>($"{BaseUrl}/{id}");
+            var response = await httpClient.GetAsync($"{BaseUrl}/{id}");
+            var sasToken = response.Headers.GetValues("x-sas-token").FirstOrDefault();
+            var vehicles = await response.Content.ReadFromJsonAsync<Vehicle>();
+            return new TheGarage([vehicles], sasToken);
         }
 
         public async Task CreateVehicleAsync(Vehicle vehicle)
@@ -47,20 +49,20 @@ namespace MyGarage.Services
             response.EnsureSuccessStatusCode();
         }
 
-        public async Task StoreImageAsync(Stream stream)
+        public async Task<string> StoreImageAsync(string filename, Stream stream)
         {
-            Console.WriteLine(">>>>>>>>>>>>  >>>>>>>>> TheGarageClient::StoreImageAsync");
-            // await httpClient.PostAsync($"{BaseUrl}/photo/upload", new StreamContent(stream)
-            // {
-            //     Headers =
-            //     {
-            //         ContentDisposition = new ContentDispositionHeaderValue("form-data")
-            //         {
-            //             FileName = Guid.NewGuid().ToString(),
-            //             Name = "file"
-            //         }
-            //     }
-            // });
+            using var formData = new MultipartFormDataContent();
+            formData.Add(new StreamContent(stream), "file", filename);
+
+            var response = await httpClient.PostAsync($"{BaseUrl}/photos", formData);
+
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(responseBody);
+
+             return response.Headers.Location?.ToString() ?? responseBody;
         }
     }
 }

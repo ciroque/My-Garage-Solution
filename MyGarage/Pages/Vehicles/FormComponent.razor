@@ -43,7 +43,7 @@ else
 
                 <div class="form-group">
                     <label for="vin">VIN</label>
-                    <input type="text" class="form-control" id="vin" placeholder="Vehicle Identification Number" @bind-value="Vehicle.Vin"/>
+                    <input type="text" class="form-control" id="vin" placeholder="Vehicle VehicleIdentification Number" @bind-value="Vehicle.Vin"/>
                 </div>
                 <div class="form-group">
                     <label for="make">Make</label>
@@ -143,7 +143,7 @@ else
                                 @foreach (var photo in Vehicle.Photos)
                                 {
                                     <tr>
-                                        <td><img src="@photo.Uri" alt="@photo.Description" width="100" height="100"/></td>
+                                            <td><img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" height="100" /></td>
                                         <td><button type="button" @onclick="() => Delete(Vehicle, photo.Id)">Delete</button></td>
                                     </tr>
                                 }
@@ -190,6 +190,8 @@ else
 
     protected ConfirmationDialog ConfirmationDialog { get; set; }
 
+    private TheGarage? TheGarage { get; set; }
+
     private string? ActionLabel { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -197,7 +199,9 @@ else
         if(Id != null)
         {
             ActionLabel = "Edit";
-            Vehicle = await TheGarageClient.GetVehicleAsync(Id.Value);
+            var theGarage = await TheGarageClient.GetVehicleAsync(Id.Value);
+            TheGarage = theGarage;
+            Vehicle = theGarage.Vehicles.FirstOrDefault();
         }
         else
         {

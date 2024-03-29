@@ -78,7 +78,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _vehicles = await TheGarageClient.GetVehiclesAsync();
+        var theGarage = await TheGarageClient.GetVehiclesAsync();
+        _vehicles = theGarage.Vehicles;
         _vehicles = _vehicles.OrderBy(v => v.Year).ToImmutableArray();
     }
 
@@ -95,7 +96,8 @@ else
         if (confirmedState.Confirmed)
         {
             await TheGarageClient.DeleteVehicleAsync(confirmedState.Vehicle.Id);
-            _vehicles = await TheGarageClient.GetVehiclesAsync();
+            var theGarage = await TheGarageClient.GetVehiclesAsync();
+            _vehicles = theGarage.Vehicles;
             StateHasChanged();
         }
     }

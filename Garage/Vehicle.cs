@@ -9,7 +9,7 @@
             Id = Guid.Empty;
         }
 
-        public Vehicle(string  vin, string? make, string? model, int year, string? color, string? licensePlate)
+        public Vehicle(string vin, string? make, string? model, int year, string? color, string? licensePlate)
         {
             Vin = vin;
             Make = make;

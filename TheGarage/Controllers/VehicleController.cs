@@ -1,35 +1,31 @@
 ﻿using Garage;
 using Microsoft.AspNetCore.Mvc;
-using TheGarage.Services;
+
+using TheGarage.ActionFilters;
 
 namespace TheGarage.Controllers
 {
-    [ApiController]
-    [Route("vehicles")]
-    public class VehicleController : ControllerBase
+    [ApiController, AddSasTokenHeaderActionFilter, Route("vehicles")]
+    public class VehicleController(IVehicleStorage vehicleStorage) : ControllerBase
     {
         private const string MyKey = "vehicles-r2112";
 
         [HttpGet(Name = "GetVehicles")]
         public IEnumerable<Vehicle> Index()
         {
-            var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-            return redis.GetVehicles(MyKey);
+            return vehicleStorage.GetVehicles(MyKey);
         }
 
         [HttpGet("{id}", Name = "GetVehicle")]
         public Vehicle GetVehicle(string id)
         {
-            var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-            return redis.GetVehicle(MyKey, id);
+            return vehicleStorage.GetVehicle(MyKey, id);
         }
 
         [HttpPost(Name = "AddVehicle")]
         public IActionResult AddVehicle(Vehicle vehicle)
         {
-            var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-
-            redis.AddVehicle(MyKey, vehicle);
+            vehicleStorage.AddVehicle(MyKey, vehicle);
 
             return Ok();
         }
@@ -37,9 +33,7 @@ namespace TheGarage.Controllers
         [HttpPut("{Id}", Name = "UpdateVehicle")]
         public IActionResult UpdateVehicle(Vehicle vehicle)
         {
-            var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-
-            redis.UpdateVehicle(MyKey, vehicle);
+            vehicleStorage.UpdateVehicle(MyKey, vehicle);
 
             return Ok();
         }
@@ -47,21 +41,9 @@ namespace TheGarage.Controllers
         [HttpDelete("{Id}", Name = "RemoveVehicle")]
         public IActionResult RemoveVehicle(Guid id)
         {
-            var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-
-            var removed = redis.RemoveVehicle(MyKey, id);
+            vehicleStorage.RemoveVehicle(MyKey, id);
 
             return Ok();
         }
-
-        //[HttpDelete(Name = "ClearVehicles")]
-        //public IActionResult ClearVehicles()
-        //{
-        //    var redis = RedisVehicleStorageService.Create("kungdu.wagner-x.net:6379");
-
-        //    redis.ClearVehicles();
-
-        //    return Ok();
-        //}
     }
 }
