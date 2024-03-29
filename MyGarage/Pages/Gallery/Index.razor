@@ -20,6 +20,7 @@ else
             {
                 <div class="col-md-3">
                     <img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" class="img-thumbnail" />
+                    <div>@photo.Title (@photo.VehicleSummary)</div>
                 </div>
             }
         </div>
@@ -27,22 +28,27 @@ else
 }
 
 @code {
+    private class PhotoDisplay(Vehicle vehicle, Photo photo)
+    {
+        public string Title { get; } = photo.Title;
+        public string Description { get; } = photo.Description;
+        public string VehicleSummary { get; } = vehicle.Year + " " + vehicle.Make + " " + vehicle.Model;
+        public string Uri { get; } = photo.Uri;
+    }
+
     private TheGarage? TheGarage { get; set; }
 
-    private IEnumerable<Photo> _photos = new List<Photo>();
+    private IEnumerable<PhotoDisplay> _photos = new List<PhotoDisplay>();
 
     protected override async Task OnInitializedAsync() 
     {
-        IEnumerable<Photo> Selector(Vehicle vehicle)
-        {
-            return vehicle.Photos ?? new List<Photo>();
-        }
-
         TheGarage = await TheGarageClient.GetVehiclesAsync();
 
         if(TheGarage.Vehicles != null)
         {
-            _photos = TheGarage.Vehicles.SelectMany((Func<Vehicle, IEnumerable<Photo>>?)Selector);
+            _photos = from vehicle in TheGarage.Vehicles
+                from photo in vehicle.Photos ?? new List<Photo>()
+                    select new PhotoDisplay(vehicle, photo);
         }
         
     }
