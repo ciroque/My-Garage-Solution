@@ -1,33 +1,30 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:17603",
-      "sslPort": 44394
-    }
-  },
+{
   "profiles": {
     "http": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5292",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AZURE_STORAGE_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=n4aworkshop;AccountKey=VJjJQA4sk6apy71jU2FCSdvi4vd7orW1Sv/rDxWrN+bSzdIHqmjSt+qbq133nYP/ar5NKHq0w8M2+AStIM/nrA==;EndpointSuffix=core.windows.net",
+        "REDIS_HOST": "kungdu.wagner-x.net"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5292"
     },
     "https": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7213;http://localhost:5292",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AppConfiguration__AzureStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=n4aworkshop;AccountKey=VJjJQA4sk6apy71jU2FCSdvi4vd7orW1Sv/rDxWrN+bSzdIHqmjSt+qbq133nYP/ar5NKHq0w8M2+AStIM/nrA==;EndpointSuffix=core.windows.net",
+        "AppConfiguration__RedisConnectionString": "kungdu.wagner-x.net",
+        "AppConfiguration__AzureStorageSasToken": "sp=r&st=2024-03-27T23:36:04Z&se=2060-12-31T20:59:59Z&sv=2022-11-02&sr=c&sig=s%2Bf%2B%2FcqXvWE3QirCmgtiEsKtdlj%2FC%2BgOhL2ZW%2F8PvTg%3D",
+        "AppConfiguration__AzureStorageContainerName": "vehicle-gallery"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7213;http://localhost:5292"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -36,6 +33,15 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    }
+  },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:17603",
+      "sslPort": 44394
     }
   }
 }

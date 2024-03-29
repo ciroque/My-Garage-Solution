@@ -1,10 +1,11 @@
 ﻿using Garage;
 using Microsoft.AspNetCore.Mvc;
 
+using TheGarage.ActionFilters;
+
 namespace TheGarage.Controllers
 {
-    [ApiController]
-    [Route("vehicles")]
+    [ApiController, AddSasTokenHeaderActionFilter, Route("vehicles")]
     public class VehicleController(IVehicleStorage vehicleStorage) : ControllerBase
     {
         private const string MyKey = "vehicles-r2112";

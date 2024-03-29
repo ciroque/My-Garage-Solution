@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: My-Garage-Solution
+metadata:
+    template: azd-init@1.6.1
+services:
+    TheGarage:
+        project: TheGarage
+        host: containerapp
+        language: dotnet

@@ -34,12 +34,14 @@ else
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var vehicle in _vehicles)
             {
-                var count = vehicle.MaintenanceHistory?.Length ?? 0;
+                var maintenanceHistoryLength = vehicle.MaintenanceHistory?.Length ?? 0;
+                var photoCount = vehicle.Photos?.Count() ?? 0;
                 <tr>
                     <td>@vehicle.Vin</td>
                     <td>@vehicle.Make</td>
@@ -47,7 +49,8 @@ else
                     <td>@vehicle.Year</td>
                     <td>@vehicle.Color</td>
                     <td>@vehicle.LicensePlate</td>
-                    <td>@count </td>
+                    <td>@maintenanceHistoryLength </td>
+                    <td>@photoCount </td>
                     <td>
                         <NavLink class="nav-link" href="@($"/vehicles/form/{vehicle.Id}")" Match="NavLinkMatch.All">
                             <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true">Edit</span>
@@ -75,7 +78,8 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _vehicles = await TheGarageClient.GetVehiclesAsync();
+        var theGarage = await TheGarageClient.GetVehiclesAsync();
+        _vehicles = theGarage.Vehicles;
         _vehicles = _vehicles.OrderBy(v => v.Year).ToImmutableArray();
     }
 
@@ -92,7 +96,8 @@ else
         if (confirmedState.Confirmed)
         {
             await TheGarageClient.DeleteVehicleAsync(confirmedState.Vehicle.Id);
-            _vehicles = await TheGarageClient.GetVehiclesAsync();
+            var theGarage = await TheGarageClient.GetVehiclesAsync();
+            _vehicles = theGarage.Vehicles;
             StateHasChanged();
         }
     }

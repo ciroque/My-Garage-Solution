@@ -1,18 +1,25 @@
 using TheGarage;
 using TheGarage.Services;
 
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddEnvironmentVariables()
+    .Build();
+
+var appConfiguration = new AppConfiguration();
+configuration.Bind("AppConfiguration", appConfiguration);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var redisUrl = "redis.nginxazure.build";
-
-builder.Services.AddScoped<IVehicleStorage>(sp => RedisVehicleStorageService.Create(redisUrl));
+builder.Services.AddSingleton(appConfiguration);
+builder.Services.AddScoped<IVehicleStorage>(sp => RedisVehicleStorageService.Create(appConfiguration.RedisConnectionString));
+builder.Services.AddScoped<IPhotoStorage>(sp => AzurePhotoStorageService.Create(appConfiguration.AzureStorageConnectionString, appConfiguration.AzureStorageContainerName));
 
 builder.Services.AddCors(options =>
 {
@@ -20,7 +27,8 @@ builder.Services.AddCors(options =>
     {
         builder.WithOrigins("*")
             .AllowAnyHeader()
-            .AllowAnyMethod();
+            .AllowAnyMethod()
+            .WithExposedHeaders("x-sas-token");
     });
 });
 

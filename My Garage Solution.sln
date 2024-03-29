@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyGarage", "MyGarage\MyGara
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGarage", "TheGarage\TheGarage.csproj", "{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}"
 EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "My Garage Deployment", "My Garage Deployment\My Garage Deployment.deployproj", "{C5213848-D61D-412F-AF28-75F70DCE4909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5213848-D61D-412F-AF28-75F70DCE4909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5213848-D61D-412F-AF28-75F70DCE4909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

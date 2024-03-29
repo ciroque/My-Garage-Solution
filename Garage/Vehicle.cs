@@ -9,7 +9,7 @@
             Id = Guid.Empty;
         }
 
-        public Vehicle(string  vin, string? make, string? model, int year, string? color, string? licensePlate)
+        public Vehicle(string vin, string? make, string? model, int year, string? color, string? licensePlate)
         {
             Vin = vin;
             Make = make;
@@ -27,6 +27,7 @@
         public string? Color { get; set; }
         public string? LicensePlate { get; set; }
         public Maintenance[]? MaintenanceHistory { get; set; }
+        public IEnumerable<Photo>? Photos { get; set; }
 
         public void AddMaintenance(Maintenance maintenance)
         {
@@ -71,6 +72,52 @@
                 var index = list.FindIndex(m => m.Id == maintenance.Id);
                 list[index] = maintenance;
                 MaintenanceHistory = list.ToArray();
+            }
+        }
+
+        public void AddPhoto(Photo photo)
+        {
+            if (Photos == null)
+            {
+                Photos = new Photo[] { photo };
+            }
+            else
+            {
+                var list = Photos.ToList();
+                list.Add(photo);
+                Photos = list.ToArray();
+            }
+        }
+
+        public Photo? GetPhoto(Guid id)
+        {
+            if (Photos != null)
+            {
+                var list = Photos.ToList();
+                return list.Find(p => p.Id == id);
+            }
+
+            return null;
+        }
+
+        public void RemovePhoto(Guid id)
+        { // TODO: Remove from cloud storage
+            if (Photos != null)
+            {
+                var list = Photos.ToList();
+                list.RemoveAll(p => p.Id == id);
+                Photos = list.ToArray();
+            }
+        }
+
+        public void UpdatePhoto(Photo photo)
+        {
+            if (Photos != null)
+            {
+                var list = Photos.ToList();
+                var index = list.FindIndex(p => p.Id == photo.Id);
+                list[index] = photo;
+                Photos = list.ToArray();
             }
         }
     }

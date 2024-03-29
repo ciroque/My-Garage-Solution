@@ -38,6 +38,16 @@
     color: white;
 }
 
+.bi-gallery-nav-menu {
+    background-image: url("images/gallery.svg");
+    color: white;
+}
+
+.bi-data-nav-menu {
+    background-image: url("./images/data.svg");
+    color: white;
+}
+
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
