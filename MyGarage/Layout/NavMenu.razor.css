@@ -40,13 +40,11 @@
 
 .bi-gallery-nav-menu {
     background-image: url("./images/gallery-svgrepo-com.svg");
-    background-size: contain;
     color: white;
 }
 
 .bi-data-nav-menu {
     background-image: url("./images/data-center-data-warehouse-svgrepo-com.svg");
-    background-size: contain;
     color: white;
 }
 
