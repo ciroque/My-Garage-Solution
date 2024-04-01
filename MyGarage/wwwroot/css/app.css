@@ -102,3 +102,19 @@ code {
     color: #c02d76;
 }
 
+
+.tile {
+    align-content: center;
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid #c02d76;
+    color: black;
+    padding: 20px;
+    margin: 1em;
+    border-radius: 5px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tile:hover {
+    transform: translateY(-5px);
+}

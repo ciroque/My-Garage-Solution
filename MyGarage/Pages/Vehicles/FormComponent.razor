@@ -33,7 +33,7 @@ else
     <div class="container-fluid">
         <ConfirmationDialog 
             @ref="ConfirmationDialog"
-            Title="Delete Vehicle Maintenance Record?"
+            Title="Delete Record?"
             ConfirmationChoiceMade="ConfirmDelete_Click"></ConfirmationDialog>
 
         <form>
@@ -104,7 +104,7 @@ else
                                                 Edit
                                             </NavLink>
                                         </td>
-                                        <td><button type="button" @onclick="() => Delete(Vehicle, maintenance.Id)">Delete</button></td>
+                                        <td><button type="button" @onclick="() => DeleteMaintenance(Vehicle, maintenance.Id)">Delete</button></td>
                                     </tr>
                                 }
                                 </tbody>
@@ -143,8 +143,8 @@ else
                                 @foreach (var photo in Vehicle.Photos)
                                 {
                                     <tr>
-                                            <td><img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" height="100" /></td>
-                                        <td><button type="button" @onclick="() => Delete(Vehicle, photo.Id)">Delete</button></td>
+                                        <td><img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" height="100" /></td>
+                                        <td><button type="button" @onclick="() => DeletePhoto(Vehicle, photo)">Delete</button></td>
                                     </tr>
                                 }
                                 </tbody>
@@ -231,19 +231,38 @@ else
         }
     }
 
-    private async Task Delete(Vehicle vehicle, Guid maintenanceId)
+    private Task DeleteMaintenance(Vehicle vehicle, Guid maintenanceId)
     {
         string message = $"Are you sure you want to delete \"{vehicle.Year} {vehicle.Make} - {vehicle.Vin} Maintenance Record\"?";
-        ConfirmationDialog.Show(message, vehicle, maintenanceId);
+        ConfirmationDialog.Show(message, ConfirmationDialog.ConfirmationTarget.Maintenance, vehicle, maintenanceId);
 
         StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task DeletePhoto(Vehicle vehicle, Photo photo)
+    {
+        string message = $"Are you sure you want to delete \"{vehicle.Year} {vehicle.Make} - {photo.Title} Photo\"?";
+        ConfirmationDialog.Show(message, ConfirmationDialog.ConfirmationTarget.Photo, vehicle, photo.Id);
+
+        StateHasChanged();
+        return Task.CompletedTask;
     }
 
     private async void ConfirmDelete_Click(ConfirmationDialog.ConfirmationState confirmedState)
     {
         if (confirmedState.Confirmed)
         {
-            confirmedState.Vehicle.RemoveMaintenance(confirmedState.MaintenanceId);
+            switch(confirmedState.Target)
+            {
+                case ConfirmationDialog.ConfirmationTarget.Maintenance:
+                    confirmedState.Vehicle.RemoveMaintenance(confirmedState.MaintenanceId);
+                    break;
+                case ConfirmationDialog.ConfirmationTarget.Photo:
+                    confirmedState.Vehicle.RemovePhoto(confirmedState.MaintenanceId);
+                    break;
+            }
+            
             await TheGarageClient.UpdateVehicleAsync(confirmedState.Vehicle);
             
             StateHasChanged();

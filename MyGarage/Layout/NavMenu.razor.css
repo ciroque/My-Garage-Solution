@@ -39,12 +39,12 @@
 }
 
 .bi-gallery-nav-menu {
-    background-image: url("images/gallery.svg");
+    background-image: url("./images/gallery-svgrepo-com.svg");
     color: white;
 }
 
 .bi-data-nav-menu {
-    background-image: url("./images/data.svg");
+    background-image: url("./images/data-center-data-warehouse-svgrepo-com.svg");
     color: white;
 }
 

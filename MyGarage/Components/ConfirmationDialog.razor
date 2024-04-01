@@ -33,13 +33,20 @@
 
 @code
 {
-    public class ConfirmationState(bool choice, Vehicle vehicle, Guid maintenanceId)
+    public enum ConfirmationTarget
     {
-        public ConfirmationState() : this(false, Vehicle.Empty, Guid.Empty)
+        Maintenance,
+        Photo
+    }
+
+    public class ConfirmationState(bool confirmed, ConfirmationTarget target, Vehicle vehicle, Guid maintenanceId)
+    {
+        public ConfirmationState() : this(false, ConfirmationTarget.Maintenance, Vehicle.Empty, Guid.Empty)
         {
         }
 
-        public bool Confirmed { get; set; } = choice;
+        public ConfirmationTarget Target { get; set; } = target;
+        public bool Confirmed { get; set; } = confirmed;
         public Vehicle Vehicle { get; set; } = vehicle;
         public Guid MaintenanceId { get; set; } = maintenanceId;
     }
@@ -62,15 +69,15 @@
 
     public void Show(string message, Vehicle vehicle)
     {
-        Show(message, vehicle, Guid.Empty);
+        Show(message, ConfirmationTarget.Maintenance, vehicle, Guid.Empty);
     }
 
-    public void Show(string message, Vehicle vehicle, Guid maintenanceId)
+    public void Show(string message, ConfirmationTarget confirmationTarget, Vehicle vehicle, Guid maintenanceId)
     {
         ShowConfirmation = true;
 
         Message = message;
-        
+        _confirmationState.Target = confirmationTarget;
         _confirmationState.Vehicle = vehicle;
         _confirmationState.MaintenanceId = maintenanceId;
     }
