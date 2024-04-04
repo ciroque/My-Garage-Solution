@@ -11,6 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheGarage", "TheGarage\TheG
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "My Garage Deployment", "My Garage Deployment\My Garage Deployment.deployproj", "{C5213848-D61D-412F-AF28-75F70DCE4909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen Sink", "Kitchen Sink\Kitchen Sink.csproj", "{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EABBC363-4910-4A3F-BB1F-F8B4FCF91566}"
+	ProjectSection(SolutionItems) = preProject
+		debugging.env = debugging.env
+		Dockerfile-MyGarage = Dockerfile-MyGarage
+		Dockerfile-TheGarage = Dockerfile-TheGarage
+		nginx.conf = nginx.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +43,10 @@ Global
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

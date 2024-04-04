@@ -4,6 +4,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorWebAssemblyEnableLinking>true</BlazorWebAssemblyEnableLinking>
+    <BlazorWebAssemblyEnableCompression>false</BlazorWebAssemblyEnableCompression>
+    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
+    <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,5 +22,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Garage\Garage.csproj" />
   </ItemGroup>
-
 </Project>

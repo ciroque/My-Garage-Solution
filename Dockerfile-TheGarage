@@ -1,0 +1,33 @@
+# docker build -t the-garage:disco -f .\Dockerfile-TheGarage . --progress plain --no-cache
+# docker run --env-file debugging.env  -dit --rm -p 8080:8080 --name the_garage the-garage:disco
+
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+WORKDIR /src
+
+COPY ./Garage ./Garage
+COPY ./TheGarage ./TheGarage
+
+WORKDIR /src/TheGarage
+
+RUN dotnet restore TheGarage.csproj
+RUN dotnet build TheGarage.csproj -c Release -o /app/build
+
+### Second Stage
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish
+
+### Third Stage
+
+# Build the final image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+# Expose the port
+EXPOSE 8080
+
+# Start the application
+ENTRYPOINT ["dotnet", "TheGarage.dll"]  
