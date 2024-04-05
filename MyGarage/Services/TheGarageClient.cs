@@ -13,7 +13,7 @@ namespace MyGarage.Services
     public class TheGarageClient(HttpClient httpClient) : ITheGarageClient
     {
         // TODO: Figure out how to get this value from configuration / for deployment in Azure.
-        private const string BaseUrl = $"https://localhost:7213/vehicles";
+        private const string BaseUrl = $"http://localhost:8080/vehicles";
 
         public async Task<TheGarage?> GetVehiclesAsync()
         {
