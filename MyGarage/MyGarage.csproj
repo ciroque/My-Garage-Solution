@@ -5,10 +5,18 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorWebAssemblyEnableLinking>true</BlazorWebAssemblyEnableLinking>
-    <BlazorWebAssemblyEnableCompression>false</BlazorWebAssemblyEnableCompression>
-    <BlazorEnableTimeZoneSupport>false</BlazorEnableTimeZoneSupport>
-    <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
+    <BlazorWebAssemblyEnableCompression>true</BlazorWebAssemblyEnableCompression>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Layout\MainLayout.razor.css" />
+    <None Remove="Layout\NavMenu.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Layout\MainLayout.razor.css" />
+    <Content Include="Layout\NavMenu.razor.css" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.1" />
