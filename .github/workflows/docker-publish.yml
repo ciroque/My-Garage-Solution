@@ -27,7 +27,7 @@ jobs:
       - name: Get short commit hash
         id: commit_hash
         run: echo "::set-output name=short_commit_hash::$(echo ${GITHUB_SHA::8})"
-           
+      
       - name: Build and push The Garage image 
         uses: docker/build-push-action@v2
         with:
