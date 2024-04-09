@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EABBC363-4910-4A3F-BB1F-F8B4FCF91566}"
 	ProjectSection(SolutionItems) = preProject
 		debugging.env = debugging.env
+		docker-compose.yaml = docker-compose.yaml
 		.github\workflows\docker-publish.yml = .github\workflows\docker-publish.yml
 		Dockerfile-MyGarage = Dockerfile-MyGarage
 		Dockerfile-TheGarage = Dockerfile-TheGarage
