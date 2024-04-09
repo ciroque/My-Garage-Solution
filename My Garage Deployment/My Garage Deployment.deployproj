@@ -9,6 +9,10 @@
       <Configuration>Release</Configuration>
       <Platform>AnyCPU</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Run Full Smash|AnyCPU">
+      <Configuration>Run Full Smash</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>c5213848-d61d-412f-af28-75f70dce4909</ProjectGuid>

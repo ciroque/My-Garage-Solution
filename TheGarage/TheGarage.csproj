@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>true</InvariantGlobalization>
     <UserSecretsId>0fe882d7-ebf2-4448-83dc-fa035b4f801c</UserSecretsId>
+    <Configurations>Debug;Release;Run Full Smash</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

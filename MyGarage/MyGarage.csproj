@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorWebAssemblyEnableLinking>true</BlazorWebAssemblyEnableLinking>
     <BlazorWebAssemblyEnableCompression>true</BlazorWebAssemblyEnableCompression>
+    <Configurations>Debug;Release;Run Full Smash</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,5 +30,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Garage\Garage.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
