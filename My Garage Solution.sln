@@ -24,28 +24,36 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Run Full Smash|Any CPU = Run Full Smash|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B3061CB9-28B3-47E2-841F-3CB0AF0F35CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3061CB9-28B3-47E2-841F-3CB0AF0F35CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3061CB9-28B3-47E2-841F-3CB0AF0F35CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3061CB9-28B3-47E2-841F-3CB0AF0F35CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3061CB9-28B3-47E2-841F-3CB0AF0F35CD}.Run Full Smash|Any CPU.ActiveCfg = Run Full Smash|Any CPU
 		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Run Full Smash|Any CPU.ActiveCfg = Run Full Smash|Any CPU
+		{6981B6F0-58F5-498B-B2B5-EC1DA4ED1627}.Run Full Smash|Any CPU.Build.0 = Run Full Smash|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Run Full Smash|Any CPU.ActiveCfg = Run Full Smash|Any CPU
+		{60CE44B0-81DA-4C5B-B31B-4DCC41C0B159}.Run Full Smash|Any CPU.Build.0 = Run Full Smash|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5213848-D61D-412F-AF28-75F70DCE4909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5213848-D61D-412F-AF28-75F70DCE4909}.Run Full Smash|Any CPU.ActiveCfg = Run Full Smash|Any CPU
 		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FED53E0-03CD-4F15-8158-2569EC1A6DD9}.Run Full Smash|Any CPU.ActiveCfg = Run Full Smash|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

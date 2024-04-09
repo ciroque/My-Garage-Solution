@@ -10,10 +10,9 @@ namespace MyGarage.Services
         public readonly IEnumerable<Vehicle> Vehicles = vehicles;
     }
 
-    public class TheGarageClient(HttpClient httpClient) : ITheGarageClient
+    public class TheGarageClient(HttpClient httpClient, AppConfiguration appConfiguration) : ITheGarageClient
     {
-        // TODO: Figure out how to get this value from configuration / for deployment in Azure.
-        private const string BaseUrl = $"http://localhost:8080/vehicles";
+        private string BaseUrl = $"{appConfiguration.TheGarageHost}/vehicles";
 
         public async Task<TheGarage?> GetVehiclesAsync()
         {

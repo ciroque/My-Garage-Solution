@@ -1,7 +1,6 @@
 # docker build -t the-garage:disco -f .\Dockerfile-TheGarage . --progress plain --no-cache
 # docker run --env-file debugging.env  -dit --rm -p 8080:8080 --name the_garage the-garage:disco
 
-
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src

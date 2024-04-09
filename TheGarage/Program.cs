@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
     {
-        builder.WithOrigins("*")
+        builder.AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod()
             .WithExposedHeaders("x-sas-token");
