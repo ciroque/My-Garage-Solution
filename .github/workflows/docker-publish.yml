@@ -22,7 +22,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.MY_GARAGE_GHCR_ACCESS }}
       
       - name: Build and push The Garage image 
         uses: docker/build-push-action@v2
