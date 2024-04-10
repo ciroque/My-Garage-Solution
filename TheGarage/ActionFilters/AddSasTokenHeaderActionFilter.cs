@@ -6,7 +6,10 @@ public class AddSasTokenHeaderActionFilter : ActionFilterAttribute
 {
     public override void OnActionExecuted(ActionExecutedContext context)
     {
-        var appConfiguration = (AppConfiguration?)context.HttpContext.RequestServices.GetService(typeof(AppConfiguration));
-        context.HttpContext.Response.Headers.Add("x-sas-token", appConfiguration.AzureStorageSasToken);
+        var configuration = context.HttpContext.RequestServices.GetService<IConfiguration>();
+        var sasToken = configuration.GetValue(AppConfiguration.Keys.AzureStorageSasToken,
+            AppConfiguration.Defaults.AzureStorageSasToken);
+        context.HttpContext.Response.Headers.Add(AppConfiguration.SasHeaderName, sasToken);
     }
 }
+  

@@ -10,23 +10,16 @@ namespace TheGarage.Services
      * It is recognized that the Redis database is not the best fit for this application, but it is used here for demonstration purposes.
      *
      */
-    public class RedisVehicleStorageService : IVehicleStorage
+    public class RedisVehicleStorageService(IConfiguration configuration) : IVehicleStorage
     {
-        private readonly IConnectionMultiplexer _connectionMultiplexer;
-        private readonly IDatabase _db;
+        private readonly Lazy<IDatabase> _database = new Lazy<IDatabase>(() => CreateDatabaseInstance(configuration));
 
-        public static IVehicleStorage Create(string connectionString)
+        private static IDatabase CreateDatabaseInstance(IConfiguration configuration)
         {
+            var connectionString = configuration.GetValue<string>(AppConfiguration.Keys.RedisConnectionString,
+                AppConfiguration.Defaults.RedisConnectionString);
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(connectionString);
-            IDatabase db = redis.GetDatabase();
-
-            return new RedisVehicleStorageService(redis, db);
-        }
-
-        private RedisVehicleStorageService(IConnectionMultiplexer connectionMultiplexer, IDatabase db)
-        {
-            _connectionMultiplexer = connectionMultiplexer;
-            _db = db;
+            return redis.GetDatabase();
         }
 
         public IEnumerable<Vehicle> AddVehicle(string key, Vehicle vehicle)
@@ -39,7 +32,7 @@ namespace TheGarage.Services
 
         public IEnumerable<Vehicle> GetVehicles(string key)
         {
-            var vehicles = _db.StringGet(key);
+            var vehicles = _database.Value.StringGet(key);
             return vehicles == RedisValue.Null ? new List<Vehicle>() : JsonSerializer.Deserialize<Vehicle[]>(vehicles);
         }
 
@@ -67,7 +60,7 @@ namespace TheGarage.Services
         private IEnumerable<Vehicle> PutVehicles(string key, IEnumerable<Vehicle> vehicles)
         {
             var enumerable = vehicles.ToList();
-            _db.StringSet(key, JsonSerializer.Serialize(enumerable));
+            _database.Value.StringSet(key, JsonSerializer.Serialize(enumerable));
             return enumerable;
         }
     }

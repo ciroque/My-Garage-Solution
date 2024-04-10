@@ -1,13 +1,6 @@
 using TheGarage;
 using TheGarage.Services;
 
-var configuration = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables()
-    .Build();
-
-var appConfiguration = new AppConfiguration();
-configuration.Bind("AppConfiguration", appConfiguration);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton(appConfiguration);
-builder.Services.AddScoped<IVehicleStorage>(sp => RedisVehicleStorageService.Create(appConfiguration.RedisConnectionString));
-builder.Services.AddScoped<IPhotoStorage>(sp => AzurePhotoStorageService.Create(appConfiguration.AzureStorageConnectionString, appConfiguration.AzureStorageContainerName));
+builder.Services.AddAzureAppConfiguration();
+
+builder.Services.AddScoped<IVehicleStorage, RedisVehicleStorageService>();
+builder.Services.AddScoped<IPhotoStorage, AzurePhotoStorageService>();
 
 builder.Services.AddCors(options =>
 {
@@ -28,7 +22,7 @@ builder.Services.AddCors(options =>
         builder.AllowAnyOrigin()
             .AllowAnyHeader()
             .AllowAnyMethod()
-            .WithExposedHeaders("x-sas-token");
+            .WithExposedHeaders(AppConfiguration.SasHeaderName);
     });
 });
 
