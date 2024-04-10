@@ -18,10 +18,10 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AppConfiguration__AzureStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=n4aworkshop;AccountKey=VJjJQA4sk6apy71jU2FCSdvi4vd7orW1Sv/rDxWrN+bSzdIHqmjSt+qbq133nYP/ar5NKHq0w8M2+AStIM/nrA==;EndpointSuffix=core.windows.net",
-        "AppConfiguration__RedisConnectionString": "kungdu.wagner-x.net",
-        "AppConfiguration__AzureStorageSasToken": "sp=r&st=2024-03-27T23:36:04Z&se=2060-12-31T20:59:59Z&sv=2022-11-02&sr=c&sig=s%2Bf%2B%2FcqXvWE3QirCmgtiEsKtdlj%2FC%2BgOhL2ZW%2F8PvTg%3D",
-        "AppConfiguration__AzureStorageContainerName": "vehicle-gallery"
+        "AzureStorageConnectionString": "DefaultEndpointsProtocol=https;AccountName=n4aworkshop;AccountKey=VJjJQA4sk6apy71jU2FCSdvi4vd7orW1Sv/rDxWrN+bSzdIHqmjSt+qbq133nYP/ar5NKHq0w8M2+AStIM/nrA==;EndpointSuffix=core.windows.net",
+        "RedisConnectionString": "kungdu.wagner-x.net",
+        "AzureStorageSasToken": "sp=r&st=2024-03-27T23:36:04Z&se=2060-12-31T20:59:59Z&sv=2022-11-02&sr=c&sig=s%2Bf%2B%2FcqXvWE3QirCmgtiEsKtdlj%2FC%2BgOhL2ZW%2F8PvTg%3D",
+        "AzureStorageContainerName": "vehicle-gallery"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7213;http://localhost:5292"

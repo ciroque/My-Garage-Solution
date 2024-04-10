@@ -10,9 +10,9 @@ namespace MyGarage.Services
         public readonly IEnumerable<Vehicle> Vehicles = vehicles;
     }
 
-    public class TheGarageClient(HttpClient httpClient, AppConfiguration appConfiguration) : ITheGarageClient
+    public class TheGarageClient(HttpClient httpClient, string theGarageHost) : ITheGarageClient
     {
-        private string BaseUrl = $"{appConfiguration.TheGarageHost}/vehicles";
+        private string BaseUrl = $"{theGarageHost}/vehicles";
 
         public async Task<TheGarage?> GetVehiclesAsync()
         {
