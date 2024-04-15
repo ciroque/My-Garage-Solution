@@ -29,7 +29,7 @@ else
             @foreach (var photo in _photos)
             {
                 <div class="col-md-3">
-                    <img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" class="img-thumbnail" />
+                    <img src="@photo.Uri" alt="@photo.Description" class="img-thumbnail" />
                     <div>@photo.Title (@photo.VehicleSummary)</div>
                 </div>
             }
@@ -46,17 +46,14 @@ else
         public string Uri { get; } = photo.Uri;
     }
 
-    private TheGarage? TheGarage { get; set; }
-
     private IEnumerable<PhotoDisplay> _photos = new List<PhotoDisplay>();
 
-    protected override async Task OnInitializedAsync() 
+    protected override async Task OnInitializedAsync()
     {
-        TheGarage = await TheGarageClient.GetVehiclesAsync();
-
-        if(TheGarage.Vehicles != null)
+        var vehicles = await TheGarageClient.GetVehiclesAsync();
+        if (vehicles != null)
         {
-            _photos = from vehicle in TheGarage.Vehicles
+            _photos = from vehicle in vehicles
                 from photo in vehicle.Photos ?? new List<Photo>()
                     select new PhotoDisplay(vehicle, photo);
         }

@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-if (builder.Environment.IsDevelopment())
+if (!builder.Environment.IsDevelopment())
 {
     // Create a new ConfigurationBuilder
     var mockConfigBuilder = new ConfigurationBuilder();
@@ -20,7 +20,6 @@ if (builder.Environment.IsDevelopment())
     mockConfigBuilder.AddInMemoryCollection(new Dictionary<string, string?>
     {
         { AppConfiguration.Keys.AzureStorageConnectionString, Environment.GetEnvironmentVariable(AppConfiguration.Keys.AzureStorageConnectionString) ?? AppConfiguration.NoDefaultProvided },
-        { AppConfiguration.Keys.AzureStorageSasToken, Environment.GetEnvironmentVariable(AppConfiguration.Keys.AzureStorageSasToken) ?? AppConfiguration.NoDefaultProvided },
         { AppConfiguration.Keys.AzureStorageContainerName, Environment.GetEnvironmentVariable(AppConfiguration.Keys.AzureStorageContainerName) ?? AppConfiguration.NoDefaultProvided },
         { AppConfiguration.Keys.RedisConnectionString, Environment.GetEnvironmentVariable(AppConfiguration.Keys.RedisConnectionString) ?? AppConfiguration.NoDefaultProvided },
     });
@@ -31,7 +30,20 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-    builder.Services.AddAzureAppConfiguration();
+    builder.Configuration.AddAzureAppConfiguration(options =>
+    {
+        var settings = builder.Configuration.GetSection("ConnectionStrings");
+        options.Connect(settings["AppConfig"])
+            .ConfigureRefresh(refresh =>
+            {
+                refresh.Register("AzureStorageConnectionString", refreshAll: true)
+                    .SetCacheExpiration(TimeSpan.FromSeconds(5));
+                refresh.Register("AzureStorageContainerName", refreshAll: true)
+                    .SetCacheExpiration(TimeSpan.FromSeconds(5));
+                refresh.Register("RedisConnectionString", refreshAll: true)
+                    .SetCacheExpiration(TimeSpan.FromSeconds(5));
+            });
+    });
 }
 
 
@@ -44,8 +56,7 @@ builder.Services.AddCors(options =>
     {
         builder.AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod()
-            .WithExposedHeaders(AppConfiguration.SasHeaderName);
+            .AllowAnyMethod();
     });
 });
 

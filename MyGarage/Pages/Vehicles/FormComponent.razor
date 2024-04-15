@@ -143,7 +143,7 @@ else
                                 @foreach (var photo in Vehicle.Photos)
                                 {
                                     <tr>
-                                        <td><img src="@photo.Uri?@TheGarage.SasToken" alt="@photo.Description" height="100" /></td>
+                                        <td><img src="@photo.Uri" alt="@photo.Description" height="100" /></td>
                                         <td><button type="button" @onclick="() => DeletePhoto(Vehicle, photo)">Delete</button></td>
                                     </tr>
                                 }
@@ -190,8 +190,6 @@ else
 
     protected ConfirmationDialog ConfirmationDialog { get; set; }
 
-    private TheGarage? TheGarage { get; set; }
-
     private string? ActionLabel { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -199,9 +197,7 @@ else
         if(Id != null)
         {
             ActionLabel = "Edit";
-            var theGarage = await TheGarageClient.GetVehicleAsync(Id.Value);
-            TheGarage = theGarage;
-            Vehicle = theGarage.Vehicles.FirstOrDefault();
+            Vehicle = await TheGarageClient.GetVehicleAsync(Id.Value); 
         }
         else
         {

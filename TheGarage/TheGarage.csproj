@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Garage\Garage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ActionFilters\" />
+  </ItemGroup>
+
 </Project>

@@ -1,33 +1,22 @@
 ﻿using System.Net.Http.Json;
-using System.Text.Json;
 using Garage;
 
 namespace MyGarage.Services
 {
-    public class TheGarage(IEnumerable<Vehicle> vehicles, string sasToken)
-    {
-        public readonly string SasToken = sasToken;
-        public readonly IEnumerable<Vehicle> Vehicles = vehicles;
-    }
-
     public class TheGarageClient(HttpClient httpClient, string theGarageHost) : ITheGarageClient
     {
         private string BaseUrl = $"{theGarageHost}/vehicles";
 
-        public async Task<TheGarage?> GetVehiclesAsync()
+        public async Task<IEnumerable<Vehicle>?> GetVehiclesAsync()
         {
             var response = await httpClient.GetAsync(BaseUrl);
-            var sasToken = response.Headers.GetValues("x-sas-token").FirstOrDefault();
             var vehicles = await response.Content.ReadFromJsonAsync<IEnumerable<Vehicle>>();
-            return new TheGarage(vehicles, sasToken);
+            return vehicles;
         }
 
-        public async Task<TheGarage?> GetVehicleAsync(Guid id)
+        public async Task<Vehicle?> GetVehicleAsync(Guid id)
         {
-            var response = await httpClient.GetAsync($"{BaseUrl}/{id}");
-            var sasToken = response.Headers.GetValues("x-sas-token").FirstOrDefault();
-            var vehicles = await response.Content.ReadFromJsonAsync<Vehicle>();
-            return new TheGarage([vehicles], sasToken);
+            return await httpClient.GetFromJsonAsync<Vehicle>($"{BaseUrl}/{id}");
         }
 
         public async Task CreateVehicleAsync(Vehicle vehicle)
