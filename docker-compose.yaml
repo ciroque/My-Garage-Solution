@@ -3,6 +3,8 @@ version: '3.8'
 services:
   the-garage:
     image: ghcr.io/ciroque/the-garage:${IMAGE_SHA:-latest}
+    environment:
+        - ConnectionStrings__AppConfig=
     ports:
       - "8080:8080"
   

@@ -102,11 +102,10 @@ code {
     color: #c02d76;
 }
 
-
 .tile {
     align-content: center;
     background-color: rgba(0,0,0,0.2);
-    border: 1px solid #c02d76;
+    border: 1px solid #2DC077; /* #c02d76 */;
     color: black;
     padding: 20px;
     margin: 1em;

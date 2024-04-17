@@ -2,27 +2,26 @@
 
 namespace TheGarage.Services
 {
-    public class AzurePhotoStorageService : IPhotoStorage
+
+    /*--
+     * Implements the IPhotoStorage interface to store photos in an Azure Blob Storage container.
+    --*/
+    public class AzurePhotoStorageService(IConfiguration configuration) : IPhotoStorage
     {
-        private readonly string _connectionString;
-        private readonly string _containerName;
+        private readonly Lazy<BlobContainerClient> _blobContainerClient = new Lazy<BlobContainerClient>(() => CreateBlobServiceClient(configuration));
 
-        public static IPhotoStorage Create(string connectionString, string containerName)
+        private static BlobContainerClient CreateBlobServiceClient(IConfiguration configuration)
         {
-            return new AzurePhotoStorageService(connectionString, containerName);
-        }
+            var connectionString = configuration.GetValue(AppConfiguration.Keys.AzureStorageConnectionString, AppConfiguration.Defaults.AzureStorageConnectionString);
+            var containerName = configuration.GetValue(AppConfiguration.Keys.AzureStorageContainerName, AppConfiguration.Defaults.AzureStorageContainerName);
 
-        private AzurePhotoStorageService(string connection, string containerName)
-        {
-            _connectionString = connection;
-            _containerName = containerName;
+            var blobServiceClient = new BlobServiceClient(connectionString);
+            return blobServiceClient.GetBlobContainerClient(containerName);
         }
 
         public async Task<string> StorePhoto(string filename, Stream photo)
         {
-            var blobServiceClient = new BlobServiceClient(_connectionString);
-            var blobContainerClient = blobServiceClient.GetBlobContainerClient(_containerName);
-            var blobClient = blobContainerClient.GetBlobClient(filename);
+            var blobClient = _blobContainerClient.Value.GetBlobClient(filename);
 
             try
             {

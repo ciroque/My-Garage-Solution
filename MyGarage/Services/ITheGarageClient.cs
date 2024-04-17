@@ -4,8 +4,8 @@ namespace MyGarage.Services;
 
 public interface ITheGarageClient
 {
-    Task<TheGarage?> GetVehiclesAsync();
-    Task<TheGarage?> GetVehicleAsync(Guid id);
+    Task<IEnumerable<Vehicle>?> GetVehiclesAsync();
+    Task<Vehicle?> GetVehicleAsync(Guid id);
     Task CreateVehicleAsync(Vehicle vehicle);
     Task UpdateVehicleAsync(Vehicle vehicle);
     Task DeleteVehicleAsync(Guid id);

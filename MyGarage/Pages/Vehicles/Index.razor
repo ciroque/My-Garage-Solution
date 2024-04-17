@@ -1,6 +1,7 @@
 ﻿@page "/vehicles"
 @using Garage
 @using System.Collections.Immutable
+@using System.Runtime.InteropServices
 @using MyGarage.Components
 @using MyGarage.Services
 
@@ -87,8 +88,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var theGarage = await TheGarageClient.GetVehiclesAsync();
-        _vehicles = theGarage.Vehicles;
+        _vehicles = await TheGarageClient.GetVehiclesAsync();
         _vehicles = _vehicles.OrderBy(v => v.Year).ToImmutableArray();
     }
 
@@ -104,9 +104,7 @@ else
     {
         if (confirmedState.Confirmed)
         {
-            await TheGarageClient.DeleteVehicleAsync(confirmedState.Vehicle.Id);
-            var theGarage = await TheGarageClient.GetVehiclesAsync();
-            _vehicles = theGarage.Vehicles;
+            _vehicles = await TheGarageClient.GetVehiclesAsync();
             StateHasChanged();
         }
     }

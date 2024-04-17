@@ -70,8 +70,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var theGarage = await TheGarageClient.GetVehicleAsync(VehicleId);
-        _vehicle = theGarage.Vehicles.FirstOrDefault();
+        _vehicle = await TheGarageClient.GetVehicleAsync(VehicleId);
         if (PhotoId != null)
         {
             ActionLabel = "Edit";
