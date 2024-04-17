@@ -25,7 +25,7 @@ namespace TheGarage.Services
         public IEnumerable<Vehicle> AddVehicle(string key, Vehicle vehicle)
         {
             var json = GetVehicles(key);
-            var enumerable = json.ToList();
+            var enumerable = json.ToList();  
             var vehicles = enumerable.Append(vehicle).ToList();
             return PutVehicles(key, vehicles);
         }

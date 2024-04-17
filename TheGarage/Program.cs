@@ -11,7 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-if (!builder.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment())
 {
     // Create a new ConfigurationBuilder
     var mockConfigBuilder = new ConfigurationBuilder();
@@ -33,7 +33,11 @@ else
     builder.Configuration.AddAzureAppConfiguration(options =>
     {
         var settings = builder.Configuration.GetSection("ConnectionStrings");
-        options.Connect(settings["AppConfig"])
+        var appConfigConnectionString = settings["AppConfig"];
+
+        Console.WriteLine($">>>>>>>>>>>>>> AppConfig ConnectionString: {appConfigConnectionString}");
+
+        options.Connect(appConfigConnectionString)
             .ConfigureRefresh(refresh =>
             {
                 refresh.Register("AzureStorageConnectionString", refreshAll: true)
