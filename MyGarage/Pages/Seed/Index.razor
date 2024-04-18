@@ -1,11 +1,14 @@
 ﻿@page "/data"
 @using Garage
+@using MyGarage.Components
 @using MyGarage.Services
 
 @inject ITheGarageClient TheGarageClient
 
 
 <PageTitle>Data Seeds</PageTitle>
+
+<MessageDialog @ref="MessageDialog"></MessageDialog>
 
 <div class="container">
     <div class="row tile">
@@ -34,9 +37,15 @@
 @code {
     private readonly SeedDataGenerator _seedDataGenerator = new SeedDataGenerator();
 
+    protected MessageDialog MessageDialog { get; set; }
+
     protected async Task SeedCategory(string category)
     {
         var vehicles = _seedDataGenerator[category];
         await TheGarageClient.SeedVehicles(vehicles);
+
+        MessageDialog.Show("Seed Data", "Vehicle data seeded successfully.");
+
+        StateHasChanged();
     }
 }
