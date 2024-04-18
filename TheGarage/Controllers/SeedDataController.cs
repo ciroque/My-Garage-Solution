@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TheGarage.Controllers
 {
-    [ApiController, Route("seed-data")]
+    [ApiController, Route("vehicles/seed-data")]
     public class SeedDataController(IVehicleStorage vehicleStorage) : Controller
     {
         [HttpPost(Name = "SeedData")]

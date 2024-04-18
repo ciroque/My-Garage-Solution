@@ -1,4 +1,9 @@
 ﻿@page "/data"
+@using Garage
+@using MyGarage.Services
+
+@inject ITheGarageClient TheGarageClient
+
 
 <PageTitle>Data Seeds</PageTitle>
 
@@ -8,11 +13,30 @@
             <img src="/images/data-center-data-warehouse-svgrepo-com.svg" alt="Placeholder Image" class="img-fluid" width="64px">
         </div>
         <div class="col-md-6">
-            <h1>Seed the data</h1>
+            <h1>Select a category of Vehicles to seed your garage.</h1>
         </div>
     </div>
+    <table>
+        <tbody>
+        @foreach (var category in VehicleCategories.Categories)
+        {
+            <tr>
+                <td>@category</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="async () => { await SeedCategory(category); }">Seed</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>
 
 @code {
+    private readonly SeedDataGenerator _seedDataGenerator = new SeedDataGenerator();
 
+    protected async Task SeedCategory(string category)
+    {
+        var vehicles = _seedDataGenerator[category];
+        await TheGarageClient.SeedVehicles(vehicles);
+    }
 }
