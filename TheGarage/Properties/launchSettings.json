@@ -16,7 +16,8 @@
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings__AppConfig": "Endpoint=https://mygac638487817582121997.azconfig.io;Id=dsZV;Secret=5qXI6QQSLVK5qEErhE3la5NoYWp9I3V8I18nljWmyco="
+        "RedisConnectionString": "kungdu.wagner-x.net",
+        "ConnectionStrings__AppConfig": ""
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7213;http://localhost:5292"

@@ -13,6 +13,7 @@ namespace TheGarage.Services
     public class RedisVehicleStorageService(IConfiguration configuration) : IVehicleStorage
     {
         private readonly Lazy<IDatabase> _database = new Lazy<IDatabase>(() => CreateDatabaseInstance(configuration));
+        private readonly string _key = configuration.GetValue<string>(AppConfiguration.Keys.RedisKey, AppConfiguration.Defaults.RedisKey);
 
         private static IDatabase CreateDatabaseInstance(IConfiguration configuration)
         {
@@ -22,45 +23,49 @@ namespace TheGarage.Services
             return redis.GetDatabase();
         }
 
-        public IEnumerable<Vehicle> AddVehicle(string key, Vehicle vehicle)
+        public IEnumerable<Vehicle> AddVehicle(Vehicle vehicle)
         {
-            var json = GetVehicles(key);
+            var json = GetVehicles();
             var enumerable = json.ToList();  
             var vehicles = enumerable.Append(vehicle).ToList();
-            return PutVehicles(key, vehicles);
+            return PutVehicles(vehicles);
         }
 
-        public IEnumerable<Vehicle> GetVehicles(string key)
+        public IEnumerable<Vehicle> GetVehicles()
         {
-            var vehicles = _database.Value.StringGet(key);
+            var vehicles = _database.Value.StringGet(_key);
             return vehicles == RedisValue.Null ? new List<Vehicle>() : JsonSerializer.Deserialize<Vehicle[]>(vehicles);
         }
 
-        public Vehicle GetVehicle(string key, string id)
+        public Vehicle GetVehicle(string id)
         {
-            return GetVehicles(key).ToList().Find(v => v.Id.ToString() == id);
+            return GetVehicles().ToList().Find(v => v.Id.ToString() == id);
         }
 
-        public IEnumerable<Vehicle> RemoveVehicle(string key, Guid id)
+        public IEnumerable<Vehicle> RemoveVehicle(Guid id)
         {
-            var json = GetVehicles(key);
+            var json = GetVehicles();
             var enumerable = json.ToList();
             var vehicles = enumerable.Where(v => v.Id != id).ToList();
-            return PutVehicles(key, vehicles);
+            return PutVehicles(vehicles);
         }
 
-        public IEnumerable<Vehicle> UpdateVehicle(string key, Vehicle vehicle)
+        public IEnumerable<Vehicle> UpdateVehicle(Vehicle vehicle)
         {
-            var json = GetVehicles(key);
+            var json = GetVehicles();
             var enumerable = json.ToList();
             var vehicles = enumerable.Where(v => v.Id != vehicle.Id).Append(vehicle);
-            return PutVehicles(key, vehicles);
+            return PutVehicles(vehicles);
         }
 
-        private IEnumerable<Vehicle> PutVehicles(string key, IEnumerable<Vehicle> vehicles)
+        /*
+         * HULK SMASH.
+         * This will overwrite the existing vehicles in the Redis database with the provided vehicles.
+         */
+        public IEnumerable<Vehicle> PutVehicles(IEnumerable<Vehicle> vehicles)
         {
             var enumerable = vehicles.ToList();
-            _database.Value.StringSet(key, JsonSerializer.Serialize(enumerable));
+            _database.Value.StringSet(_key, JsonSerializer.Serialize(enumerable));
             return enumerable;
         }
     }

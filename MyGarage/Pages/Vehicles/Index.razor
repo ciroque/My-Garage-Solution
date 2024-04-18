@@ -104,6 +104,7 @@ else
     {
         if (confirmedState.Confirmed)
         {
+            await TheGarageClient.DeleteVehicleAsync(confirmedState.Vehicle.Id);
             _vehicles = await TheGarageClient.GetVehiclesAsync();
             StateHasChanged();
         }
