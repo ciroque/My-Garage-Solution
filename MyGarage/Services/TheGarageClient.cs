@@ -50,7 +50,14 @@ namespace MyGarage.Services
 
             Console.WriteLine(responseBody);
 
-             return response.Headers.Location?.ToString() ?? responseBody;
+            return response.Headers.Location?.ToString() ?? responseBody;
+        }
+
+        public async Task SeedVehicles(IEnumerable<Vehicle> vehicles)
+        {
+            var response = await httpClient.PostAsJsonAsync($"{BaseUrl}/seed-data", vehicles);
+
+            response.EnsureSuccessStatusCode();
         }
     }
 }

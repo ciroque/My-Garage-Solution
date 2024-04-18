@@ -10,6 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ActionFilters\**" />
+    <Content Remove="ActionFilters\**" />
+    <EmbeddedResource Remove="ActionFilters\**" />
+    <None Remove="ActionFilters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.AzureAppConfiguration" Version="7.1.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.17" />
@@ -18,10 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Garage\Garage.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ActionFilters\" />
   </ItemGroup>
 
 </Project>

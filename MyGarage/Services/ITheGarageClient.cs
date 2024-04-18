@@ -10,4 +10,5 @@ public interface ITheGarageClient
     Task UpdateVehicleAsync(Vehicle vehicle);
     Task DeleteVehicleAsync(Guid id);
     Task<string> StoreImageAsync(string filename, Stream stream);
+    Task SeedVehicles(IEnumerable<Vehicle> vehicles);
 }

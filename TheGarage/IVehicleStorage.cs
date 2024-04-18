@@ -4,10 +4,11 @@ namespace TheGarage
 {
     public interface IVehicleStorage
     {
-        IEnumerable<Vehicle> AddVehicle(string key, Vehicle vehicle);
-        IEnumerable<Vehicle> GetVehicles(string key);
-        Vehicle GetVehicle(string key, string id);
-        IEnumerable<Vehicle> RemoveVehicle(string key, Guid id);
-        IEnumerable<Vehicle> UpdateVehicle(string key, Vehicle vehicle);
+        IEnumerable<Vehicle> AddVehicle(Vehicle vehicle);
+        IEnumerable<Vehicle> GetVehicles();
+        Vehicle GetVehicle(string id);
+        IEnumerable<Vehicle> PutVehicles(IEnumerable<Vehicle> vehicles);
+        IEnumerable<Vehicle> RemoveVehicle(Guid id);
+        IEnumerable<Vehicle> UpdateVehicle(Vehicle vehicle);
     }
 }

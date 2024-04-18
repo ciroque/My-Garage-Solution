@@ -1,0 +1,38 @@
+﻿@if (ShowDialog)
+{
+    <div class="modal fade show d-block" id="messageModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">@Title</h5>
+                </div>
+                <div class="modal-body">
+                    @Message
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => ShowDialog = false">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    protected bool ShowDialog { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = "Title";
+
+    [Parameter]
+    public string Message { get; set; } = "Message";
+
+    public void Show(string title, string message)
+    {
+        Title = title;
+        Message = message;
+        ShowDialog = true;
+        StateHasChanged();
+    }
+}

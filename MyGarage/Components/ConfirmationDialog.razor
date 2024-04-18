@@ -3,11 +3,11 @@
 
 @if (ShowConfirmation)
 {
-    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+    <div class="modal fade show d-block" id="confirmationModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">@Title</h5>
+                    <h5 class="modal-title" id="confirmationModalLabel">@Title</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                             @onclick="() => OnConfirmationChoiceMade(false)">
                         <span aria-hidden="true">&times;</span>

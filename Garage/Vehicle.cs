@@ -6,11 +6,12 @@
 
         public Vehicle()
         {
-            Id = Guid.Empty;
+            Id = Guid.NewGuid();
         }
 
         public Vehicle(string vin, string? make, string? model, int year, string? color, string? licensePlate)
         {
+            Id = Guid.NewGuid();
             Vin = vin;
             Make = make;
             Model = model;
@@ -19,7 +20,7 @@
             LicensePlate = licensePlate;
         }
 
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public string? Vin { get; set; }
         public string? Make { get; set; }
         public string? Model { get; set; }
