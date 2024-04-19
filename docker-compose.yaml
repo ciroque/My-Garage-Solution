@@ -7,10 +7,12 @@ services:
         - ConnectionStrings__AppConfig=
     ports:
       - "8080:8080"
-  
+    pull_policy: always
+    
   my-garage:
     image: ghcr.io/ciroque/my-garage:${IMAGE_SHA:-latest}
     ports:
       - "80:80"
     depends_on:
       - the-garage
+    pull_policy: always
