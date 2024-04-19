@@ -1,4 +1,12 @@
-﻿$Ticks = (Get-Date).Ticks
+﻿<#
+    establish-azure-resources.ps1
+
+    This script creates all the Micorosft Azure Resources needed to run the My Garage application.
+
+    The script assumes that you have the Azure CLI installed and configured to point to the desired Azure Subscription.
+#>
+
+$Ticks = (Get-Date).Ticks
 $Location = "westus2"
 $ResourceGroupName = "MyGarageRG"
 $StorageAccountName = "mygsa" + $Ticks
@@ -25,7 +33,7 @@ az group delete --name $ResourceGroupName --yes
 <# Create a new set of stuff #>
 
 echo "Creating resources..."
-
+    
 #-- Resource Group, The Root of All Things
 az group create --name $ResourceGroupName --location $Location --tags owner=$owner
 
