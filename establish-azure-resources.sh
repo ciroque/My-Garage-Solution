@@ -16,9 +16,10 @@ function calculate_ticks() {
 clear
 
 # These need to be set by the user before running the script
-resourceGroupName="MyGarageRG"
+#resourceGroupName="MyGarageRG"
+resourceGroupName=${RESOURCE_GROUP_NAME=MyGarage}
 sasExpiry="2024-12-31T23:59:59Z"
-redisConnectionString="kungdu.wagner-x.net"
+redisConnectionString="redis.example.com"
 
 ticks=$(calculate_ticks)
 location=westus2
@@ -36,7 +37,7 @@ redisConnectionStringConfigKey="RedisConnectionString"
 
 
 ## Create the stuff
-echo Creating Resources...
+echo Creating Resources in Resource Group ""$resourceGroupName""...
 
 # Storage Account, The Place to Store Stuff
 # * The --allow-blob-public-access true is required to allow the container to be public
@@ -68,4 +69,7 @@ az appconfig kv set --yes --name $appConfigName --key $redisConnectionStringConf
 # Burp out the AppConfig ConnectionString so it can be included in the MyGarage application startup. It is an argument to the docker-compose command:
 # The docker-compose file will be updated to include this value in the environment variables
 echo "AppConfig Connection String: $appConfigConnectionString"
+
+sed -i "5s/$/$appConfigConnectionString" docker-compose.yaml
+
 
