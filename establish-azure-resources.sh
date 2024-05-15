@@ -71,5 +71,3 @@ az appconfig kv set --yes --name $appConfigName --key $redisConnectionStringConf
 echo "AppConfig Connection String: $appConfigConnectionString"
 
 sed -i "5s/$/$appConfigConnectionString" docker-compose.yaml
-
-
