@@ -19,6 +19,7 @@ namespace TheGarage.Services
         {
             var connectionString = configuration.GetValue<string>(AppConfiguration.Keys.RedisConnectionString,
                 AppConfiguration.Defaults.RedisConnectionString);
+            Console.WriteLine($">>>>>> Connecting to Redis at {connectionString}");
             ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(connectionString);
             return redis.GetDatabase();
         }
