@@ -38,6 +38,9 @@ COPY --from=build /app/publish/wwwroot /etc/nginx/html
 RUN ln -snf /usr/share/nginx/html /etc/nginx/html \
 	&& ln -snf /usr/share/nginx/html /var/www
 
+RUN ln -snf /usr/share/nginx/html /etc/nginx/html \
+	&& ln -snf /usr/share/nginx/html /var/www
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
