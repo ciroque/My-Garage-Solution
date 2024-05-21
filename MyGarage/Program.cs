@@ -20,8 +20,7 @@ else
 {
     builder.Configuration.AddAzureAppConfiguration(options =>
     {
-        var settings = builder.Configuration.GetSection("ConnectionStrings");
-        var appConfigConnectionString = settings["AppConfig"];
+        var appConfigConnectionString = Environment.GetEnvironmentVariable("ConnectionStrings__AppConfig");
 
         Console.WriteLine($">>>>>>>>>>>>>> AppConfig ConnectionString: {appConfigConnectionString}");
 
