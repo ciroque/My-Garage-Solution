@@ -20,6 +20,8 @@ spec:
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
+        - name: ConnectionStrings__AppConfig
+          value: "Endpoint=https://mygac171579510454211.azconfig.io;Id=xTm9;Secret=Zu8tQL+1Ig6+iZNzuNxfzbzmlVhfS/eWjg5tUepUtg4="
 
 ---
 apiVersion: v1

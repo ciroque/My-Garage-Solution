@@ -14,7 +14,6 @@ $StorageContainerName = "mygsc" + $Ticks
 $SasTokenName = "mygsas" + $Ticks
 $SasExpiry = "2024-05-31T23:59:59Z"
 $AppConfigName = "mygac" + $Ticks
-$SasTokenAppConfigKey = "AzureStorageSasToken"
 $StorageConnectionStringConfigKey = "AzureStorageConnectionString"
 $StorageContainerNameConfigKey = "AzureStorageContainerName"
 $RedisConnectionStringConfigKey = "RedisConnectionString"

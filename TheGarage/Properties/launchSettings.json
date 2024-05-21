@@ -5,7 +5,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "RedisConnectionString": "kungdu.wagner-x.net",
+        "ConnectionStrings__AppConfig": "Endpoint=https://mygac171579510454211.azconfig.io;Id=xTm9;Secret=Zu8tQL+1Ig6+iZNzuNxfzbzmlVhfS/eWjg5tUepUtg4="
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5292"
@@ -17,7 +19,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "RedisConnectionString": "kungdu.wagner-x.net",
-        "ConnectionStrings__AppConfig": ""
+        "ConnectionStrings__AppConfig": "Endpoint=https://mygac171579510454211.azconfig.io;Id=xTm9;Secret=Zu8tQL+1Ig6+iZNzuNxfzbzmlVhfS/eWjg5tUepUtg4="
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7213;http://localhost:5292"
