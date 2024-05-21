@@ -20,6 +20,7 @@ clear
 resourceGroupName=${RESOURCE_GROUP_NAME=MyGarage}
 sasExpiry="2024-12-31T23:59:59Z"
 redisConnectionString="redis.example.com"
+theGarageUrl="http://the-garage.example.com"
 
 ticks=$(calculate_ticks)
 location=westus2
@@ -30,10 +31,10 @@ appConfigName="mygac$ticks"
 owner=$(whoami)
 
 # These correspond to the keys in the AppConfig that the My Garage application will use to access the resources, do not modify
-sasTokenAppConfigKey="AzureStorageSasToken"
 storageConnectionStringConfigKey="AzureStorageConnectionString"      
 storageContainerNameConfigKey="AzureStorageContainerName"
 redisConnectionStringConfigKey="RedisConnectionString"
+theGarageUrlConfigKey="TheGarageUrl"
 
 
 ## Create the stuff
@@ -65,6 +66,7 @@ appConfigConnectionString=$(az appconfig credential list --name $appConfigName -
 az appconfig kv set --yes --name $appConfigName --key $storageConnectionStringConfigKey --value "$storageConnectionString"
 az appconfig kv set --yes --name $appConfigName --key $storageContainerNameConfigKey --value "$storageContainerName"
 az appconfig kv set --yes --name $appConfigName --key $redisConnectionStringConfigKey --value "$redisConnectionString"
+az appconfig kv set --yes --name $appConfigName --key $theGarageConfigKey --value "$theGarageUrl"
 
 # Burp out the AppConfig ConnectionString so it can be included in the MyGarage application startup. It is an argument to the docker-compose command:
 # The docker-compose file will be updated to include this value in the environment variables

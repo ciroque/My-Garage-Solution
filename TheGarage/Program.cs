@@ -40,11 +40,11 @@ else
         options.Connect(appConfigConnectionString)
             .ConfigureRefresh(refresh =>
             {
-                refresh.Register("AzureStorageConnectionString", refreshAll: true)
+                refresh.Register(AppConfiguration.Keys.AzureStorageConnectionString, refreshAll: true)
                     .SetCacheExpiration(TimeSpan.FromSeconds(5));
-                refresh.Register("AzureStorageContainerName", refreshAll: true)
+                refresh.Register(AppConfiguration.Keys.AzureStorageContainerName, refreshAll: true)
                     .SetCacheExpiration(TimeSpan.FromSeconds(5));
-                refresh.Register("RedisConnectionString", refreshAll: true)
+                refresh.Register(AppConfiguration.Keys.RedisConnectionString, refreshAll: true)
                     .SetCacheExpiration(TimeSpan.FromSeconds(5));
             });
     });

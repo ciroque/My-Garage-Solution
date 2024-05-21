@@ -22,6 +22,7 @@ VNET_NAME=$RESOURCE_GROUP_NAME_LC-vnet
 SUBNET_NAME=$RESOURCE_GROUP_NAME_LC-snet
 SAS_EXPIRY="2024-12-31T23:59:59Z"
 REDIS_CONNECTION_STRING="redis.example.com"
+THE_GARAGE_URI="http://the-garage.example.com"
 
 TICKS=$(calculate_ticks)
 STORAGE_ACCOUNT_NAME="mygsa$ticks"
@@ -33,10 +34,10 @@ APP_CONFIG_NAME="mygac$ticks"
 ## These correspond to the keys in the AppConfig that the My Garage application will use to access the resources, do not modify
 ## ----------------------------------------------------------------------------
 
-SAS_TOKEN_APPCONFIG_KEY="AzureStorageSasToken"
 STORAGE_CONNECTION_STRING_CONFIG_KEY="AzureStorageConnectionString"      
 STORAGE_CONTAINER_NAME_CONFIG_KEY="AzureStorageContainerName"
 REDIS_CONNECTION_STRING_CONFIG_KEY="RedisConnectionString"
+THE_GARAGE_URI_CONFIG_KEY="TheGarageUri"
 
 ## ----------------------------------------------------------------------------
 ## Create the Resource Group
