@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: the-garage
-        image: ghcr.io/ciroque/the-garage:ce9e34fa
+        image: ghcr.io/ciroque/the-garage:d6b1b595
         ports:
         - containerPort: 80
         env:
