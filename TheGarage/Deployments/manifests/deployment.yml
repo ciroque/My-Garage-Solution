@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: the-garage
-        image: ghcr.io/ciroque/the-garage:e608e2a7
+        image: ghcr.io/ciroque/the-garage:9fd0ad69
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: "Production"
@@ -25,13 +25,13 @@ spec:
         livenessProbe:
           httpGet:
             path: "/vehicles"
-            port: 80
+            port: 8080
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: "/vehicles"
-            port: 80
+            port: 8080
           initialDelaySeconds: 30
           periodSeconds: 10
 
@@ -41,10 +41,11 @@ kind: Service
 metadata:
   name: the-garage-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
+  clusterIP: None
   selector:
     app: the-garage
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 80
