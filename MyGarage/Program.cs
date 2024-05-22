@@ -16,7 +16,7 @@ builder.Services.AddScoped(sp => httpClient);
 // Register the TheGarageClient as a service, so it can be injected into components
 builder.Services.AddScoped<ITheGarageClient>(sp =>
 {
-    var theGarageHost = "the-garage-service";
+    var theGarageHost = "http://the-garage-service:8080";
     if (builder.HostEnvironment.IsDevelopment())
     {
         theGarageHost = "https://localhost:7213";
