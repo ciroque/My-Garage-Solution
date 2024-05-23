@@ -3,9 +3,9 @@ using Garage;
 
 namespace MyGarage.Services
 {
-    public class TheGarageClient(HttpClient httpClient, string theGarageHost) : ITheGarageClient
+    public class TheGarageClient(HttpClient httpClient) : ITheGarageClient
     {
-        private string BaseUrl = $"{theGarageHost}/vehicles";
+        private string BaseUrl = $"/vehicles";
 
         public async Task<IEnumerable<Vehicle>?> GetVehiclesAsync()
         {
