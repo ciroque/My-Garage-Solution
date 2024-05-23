@@ -20,7 +20,7 @@ await builder.Build().RunAsync();
 
 Uri? GetTheGarageHost()
 {
-    var theGarageHost = "http://the-garage-service:8080";
+    var theGarageHost = "http://the-garage.example.com:8080";
     if (builder.HostEnvironment.IsDevelopment())
     {
         theGarageHost = "https://localhost:7213";
