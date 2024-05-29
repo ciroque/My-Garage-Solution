@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: the-garage
-        image: ghcr.io/ciroque/the-garage:9fd0ad69
+        image: ghcr.io/ciroque/the-garage:18fb641c
         ports:
         - containerPort: 8080
         env:
@@ -39,13 +39,45 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: the-garage-service
+  name: the-garage-svc
 spec:
   type: ClusterIP
   clusterIP: None
+  ports:
+    - name: http-alt
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
   selector:
     app: the-garage
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 80
+
+--- 
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: the-garage-vs
+spec:
+  host: the-garage.example.com
+  upstreams:
+  - name: the-garage
+    service: the-garage-svc
+    port: 8080
+    healthCheck:
+      enable: true
+      path: /vehicles
+      interval: 10s
+      jitter: 3s
+      fails: 3
+      passes: 2
+      connect-timeout: 30s
+      read-timeout: 20s
+  routes:
+  - path: /
+    action:
+      pass: the-garage
+  - path: /garage-lab
+    action:
+      return:
+        code: 200
+        type: text/html
+        body: "You have found The Garage"
